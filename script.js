@@ -28,6 +28,7 @@
       referrerHost: ft.ref, utmSource: ft.src, utm: ft.utm, landing: ft.landing,
       page: location.pathname, lang: document.documentElement.lang || navigator.language || ""
     });
+    if (window.gtag) gtag("event", event, { event_label: label || "" });
     try {
       if (navigator.sendBeacon) navigator.sendBeacon(LEAD_ENDPOINT, new Blob([payload], { type: "text/plain" }));
       else fetch(LEAD_ENDPOINT, { method: "POST", body: payload, keepalive: true, mode: "no-cors" });
