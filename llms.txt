@@ -1,31 +1,50 @@
 # Azure Waves Realty Inc
 
-> San Diego property management company. Full-service residential management for 8% of collected monthly rent, tenant placement only, and commercial leasing & advisory (nationwide).
+> San Diego residential property management company (also known as Azure Waves Realty and AZW Realty). Full-service management for 8% of collected monthly rent, Tenant Placement Only for one month's rent ($750 minimum), and commercial leasing & advisory (nationwide). No upfront costs.
 
+Website: https://www.azwrealty.com/
 Phone: (858) 304-0136
 Email: contactusazw@gmail.com
 Location: San Diego, California
+Serves: residential owners across San Diego County (single-family homes, condos, multifamily)
 
 ## Pricing
 - Full-Service Management: 8% of collected monthly rent; tenant placement fee is half of the first month's rent. No upfront costs.
 - Tenant Placement Only: one month's rent ($750 minimum); no monthly fee.
+- No management fee during vacancy or eviction.
+- Details: https://www.azwrealty.com/pricing/
 
 ## Our Promise
 - We don't get paid unless you do: no management fee during vacancy or eviction.
-- Eviction protection: up to $1,000 in attorney fees for non-payment evictions of tenants we placed.
+- Eviction protection: up to $1,000 in attorney fees for non-payment evictions of tenants we placed, on properties we actively manage.
 - Maintenance response: urgent issues within 24 hours, non-urgent within 48 hours.
 - Transparent communication: the Broker reaches out personally within 24 hours on request.
 - Market rent analysis, re-evaluated at no extra charge if the property doesn't rent in the expected time.
 
 ## Services
-- [Property Management](https://www.azwrealty.com/san-diego-property-management/)
+- [Property Management](https://www.azwrealty.com/san-diego-property-management/): full-service management for 8% of collected monthly rent
 - [Marketing & Leasing](https://www.azwrealty.com/marketing-and-leasing/): professional photos, top rental websites, showings 7 days a week
 - [Tenant Screening & Leasing](https://www.azwrealty.com/tenant-screening-and-leasing/): income, credit, eviction, employment, criminal, lien, and rental reference checks
 - [Rent Collection](https://www.azwrealty.com/rent-collection/): online payments; owner draws by the 10th of each month
 - [Maintenance & Service](https://www.azwrealty.com/maintenance-service/): 24/7 emergency service, vetted vendors
 - [Accounting](https://www.azwrealty.com/accounting/): monthly and annual owner statements
 - [Pricing](https://www.azwrealty.com/pricing/)
+- [FAQ](https://www.azwrealty.com/faq/)
+- [Our Promise](https://www.azwrealty.com/our-promise/)
+- [Why Choose Us](https://www.azwrealty.com/why-choose-us/)
 - [Contact](https://www.azwrealty.com/contact/)
+
+## Questions we answer
+- How much does a property manager cost in San Diego with Azure Waves Realty? (8% of collected monthly rent, plus half of the first month's rent for tenant placement)
+- How much does it cost to just find a tenant for my rental? (Tenant Placement Only: one month's rent, $750 minimum)
+- Do I pay a management fee if my rental is vacant? (No. No fee during vacancy or eviction.)
+- Are there upfront costs to sign up? (No.)
+- What happens if a tenant you placed stops paying rent? (Up to $1,000 in attorney fees for a non-payment eviction of a tenant we placed.)
+- How fast do you respond to maintenance requests? (Urgent within 24 hours, non-urgent within 48 hours, emergencies 24/7.)
+- When do owners get paid each month? (Owner draws by the 10th of every month.)
+- Which San Diego neighborhoods and cities do you manage in? (See Areas Served below.)
+
+More answers: https://www.azwrealty.com/faq/
 
 ## Areas Served
 San Diego, Pacific Beach, 4S Ranch, Poway, Linda Vista, Del Mar, El Cajon, National City, Old Town, Carmel Valley, Clairemont, Del Sur, Cardiff by the Sea, Fashion Valley, Solana Beach, Spring Valley, North Park, Ocean Beach, Encinitas, Mira Mesa, Vista, Bay Park, La Jolla, San Carlos, Lemon Grove, City Heights, Point Loma, Oceanside, Carlsbad, Escondido, Bay Ho, Sorrento Valley, Allied Gardens, Imperial Beach, Mission Hills, Mission Beach, Santee, Rancho Bernardo, Rancho Peñasquitos, San Marcos, Kearny Mesa, Miramar, La Mesa, Chula Vista, Mission Valley, Lakeside.
