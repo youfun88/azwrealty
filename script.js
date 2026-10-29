@@ -1,6 +1,7 @@
-// Azure Waves Realty — nav, scroll reveals, contact forms (FormSubmit, no backend)
+// Azure Waves Realty: nav, scroll reveals, contact forms (sent through admin.shiptolive.com)
 (function () {
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/contactusazw@gmail.com";
+  // Sent by admin.shiptolive.com (Brevo) to contactusazw@gmail.com. No third-party activation needed.
+  var FORM_ENDPOINT = "https://admin.shiptolive.com/api/contact";
   var body = document.body;
   var header = document.querySelector(".site-header");
 
@@ -111,19 +112,20 @@
       var data = {};
       new FormData(form).forEach(function (v, k) { data[k] = v; });
       if (data._honey) return;
-      data._subject = form.getAttribute("data-subject") + (data.name ? " — " + data.name : "");
-      data._template = "table";
-      data.page = document.title;
+      data.site = "azwrealty";
+      data._subject = form.getAttribute("data-subject") + (data.name ? ": " + data.name : "");
+      data.page = document.title + " (" + location.pathname + ")";
 
       var label = btn.innerHTML;
       btn.disabled = true;
       btn.textContent = "Sending…";
+      // text/plain keeps it a simple request (no CORS preflight)
       fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(data)
       })
-        .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === "false") throw j; }); })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.ok) throw j; }); })
         .then(function () {
           form.reset();
           logLead("generate_lead", form.getAttribute("data-subject") || "Form");
