@@ -32,6 +32,6 @@ assets/img/                        logo, favicon, social share image
 
 ## Contact forms
 
-Forms post to [FormSubmit](https://formsubmit.co) → `contactusazw@gmail.com`.
+Forms post to [FormSubmit](https://formsubmit.co) → `hanschiang@gmail.com`.
 The first submission triggers a one-time activation email to that inbox — confirm
 it once and submissions flow through after that.

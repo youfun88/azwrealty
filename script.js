@@ -1,6 +1,6 @@
 // Azure Waves Realty: nav, scroll reveals, contact forms (sent through admin.shiptolive.com)
 (function () {
-  // Sent by admin.shiptolive.com (Brevo) to contactusazw@gmail.com. No third-party activation needed.
+  // Sent by admin.shiptolive.com (Brevo) to hanschiang@gmail.com. No third-party activation needed.
   var FORM_ENDPOINT = "https://admin.shiptolive.com/api/contact";
   var body = document.body;
   var header = document.querySelector(".site-header");
@@ -132,7 +132,7 @@
           show("ok", "Thank you! Your message has been sent. We'll be in touch within one business day.");
         })
         .catch(function () {
-          show("err", "Sorry, something went wrong. Please call (858) 304-0136 or email contactusazw@gmail.com.");
+          show("err", "Sorry, something went wrong. Please call (858) 304-0136 or email hanschiang@gmail.com.");
         })
         .finally(function () { btn.disabled = false; btn.innerHTML = label; });
     });
