@@ -331,6 +331,25 @@ a.card:hover .more .i { transform: translateX(3px); }
 .prose h2 { font-size: 1.9rem; margin-top: 1.6em; }
 .callout { margin-top: 28px; border-left: 4px solid var(--azure); background: var(--sky-soft); border-radius: 0 var(--radius) var(--radius) 0; padding: 22px 26px; color: var(--ink); }
 .callout p { margin: 0; }
+.answer-box { margin: 0 0 28px; }
+.answer-box .k { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--azure); margin-bottom: 6px; }
+.answer-box h2, .prose .answer-box h2 { font-size: 1.35rem; margin: 0 0 10px; }
+.answer-box p + p { margin-top: 10px; }
+.answer-box .answer-links { font-weight: 600; font-size: .95rem; }
+.answer-box .answer-links a { display: inline-block; padding: 10px 0; }
+.answer-wrap { max-width: 920px; margin: 0 auto 48px; }
+.answer-updated { font-size: .85rem; color: var(--muted); margin: 10px 0 0; }
+.num-list { padding-left: 1.4em; margin: 16px 0 0; }
+.num-list li { margin-bottom: 10px; padding-left: 4px; }
+.fee-table-wrap { max-width: 980px; margin: 56px auto 0; overflow-x: auto; }
+.fee-table-wrap h2 { text-align: center; }
+.fee-table { width: 100%; min-width: 620px; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); font-size: .95rem; }
+.fee-table th, .fee-table td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.fee-table thead th { background: var(--sky-soft); color: var(--ink); font-weight: 700; }
+.fee-table tbody th { color: var(--ink); font-weight: 600; }
+.fee-table caption { caption-side: top; text-align: left; font-size: .85rem; color: var(--muted); padding: 0 0 8px; }
+.fee-table-inline { margin: 20px 0 0; }
+.fee-table-inline .fee-table { min-width: 0; }
 
 .values { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .values li { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }

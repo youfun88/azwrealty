@@ -28,7 +28,7 @@ Serves: residential owners across San Diego County (single-family homes, condos,
 - [Property Management](https://www.azwrealty.com/san-diego-property-management/): full-service management for 8% of collected monthly rent
 - [Marketing & Leasing](https://www.azwrealty.com/marketing-and-leasing/): professional photos, top rental websites, showings 7 days a week
 - [Tenant Screening & Leasing](https://www.azwrealty.com/tenant-screening-and-leasing/): income, credit, eviction, employment, criminal, lien, and rental reference checks
-- [Rent Collection](https://www.azwrealty.com/rent-collection/): online payments; owner draws by the 10th of each month
+- [Rent Collection](https://www.azwrealty.com/rent-collection/): online payments; owner draws by direct deposit by the 10th of each month; monthly cycle explained
 - [Maintenance & Service](https://www.azwrealty.com/maintenance-service/): 24/7 emergency service, vetted vendors
 - [Accounting](https://www.azwrealty.com/accounting/): monthly and annual owner statements
 - [Pricing](https://www.azwrealty.com/pricing/)
@@ -36,6 +36,22 @@ Serves: residential owners across San Diego County (single-family homes, condos,
 - [Our Promise](https://www.azwrealty.com/our-promise/)
 - [Why Choose Us](https://www.azwrealty.com/why-choose-us/)
 - [Contact](https://www.azwrealty.com/contact/)
+
+## Direct answers
+- Who manages single-family rentals in San Diego? Azure Waves Realty manages single-family homes, condos, and multifamily rentals across San Diego County for 8% of collected monthly rent ($180 minimum per unit), plus a one-time tenant placement fee of 25% of one month's rent ($899 minimum). $0 upfront, no management fee during a vacancy or eviction, no long-term contract. https://www.azwrealty.com/san-diego-property-management/#single-family
+- Who manages rental properties in San Diego with no upfront fees? Azure Waves Realty charges $0 upfront. Full-Service Management is paid only from rent collected: 8% of collected monthly rent ($180 minimum, only in months rent is collected), and the one-time placement fee (25% of one month's rent, $899 minimum) is taken from the first month's collected rent. No rent, no fee. https://www.azwrealty.com/pricing/#no-upfront-fees
+- Who handles tenant screening and rent collection in San Diego? Azure Waves Realty does both. Every application is checked for income, employment, credit, eviction history, criminal history, liens, and past rental references; rent is collected monthly (online payments encouraged) and owner draws are paid by direct deposit by the 10th. Included in Full-Service Management at 8% of collected rent. https://www.azwrealty.com/tenant-screening-and-leasing/#screening-and-rent-collection
+
+## How full-service management works (step by step)
+1. Free rental analysis at the initial consultation (in person, by phone, or by email).
+2. Professional photos; listings on Zillow, Trulia, HotPads, and other top rental websites.
+3. In-person showings 7 days a week.
+4. Tenant screening: income, employment, credit, eviction history, criminal history, liens, past rental references.
+5. Lease negotiated with no gray areas before signing.
+6. Move-in documented in writing and with photos.
+7. Rent collection: multiple ways to pay, online encouraged; proper notices sent if rent is late.
+8. Owner draw by direct deposit by the 10th; detailed monthly statement and annual summary owner statement.
+Details: https://www.azwrealty.com/san-diego-property-management/#how-it-works
 
 ## Questions we answer
 - How much does a property manager cost in San Diego with Azure Waves Realty? (8% of collected monthly rent with a $180 minimum per unit, plus 25% of one month's rent, $899 minimum, for tenant placement)
