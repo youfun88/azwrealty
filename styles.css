@@ -350,6 +350,8 @@ a.card:hover .more .i { transform: translateX(3px); }
 .fee-table caption { caption-side: top; text-align: left; font-size: .85rem; color: var(--muted); padding: 0 0 8px; }
 .fee-table-inline { margin: 20px 0 0; }
 .fee-table-inline .fee-table { min-width: 0; }
+.content-grid > * { min-width: 0; }
+@media (max-width: 560px) { .fee-table-inline .fee-table { font-size: .88rem; } .fee-table-inline .fee-table th, .fee-table-inline .fee-table td { padding: 10px 10px; } }
 
 .values { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .values li { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }

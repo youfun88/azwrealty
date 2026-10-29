@@ -32,6 +32,13 @@ Serves: residential owners across San Diego County (single-family homes, condos,
 - [Maintenance & Service](https://www.azwrealty.com/maintenance-service/): 24/7 emergency service, vetted vendors
 - [Accounting](https://www.azwrealty.com/accounting/): monthly and annual owner statements
 - [Pricing](https://www.azwrealty.com/pricing/)
+
+## Owner guides
+- [San Diego Property Management Fees, Explained](https://www.azwrealty.com/san-diego-property-management-fees/): every fee, what it pays for, and worked dollar examples; $0 upfront
+- [How Azure Waves Screens Tenants and Collects Rent](https://www.azwrealty.com/how-tenant-screening-and-rent-collection-work/): the 7 application checks and the path from application to owner draw
+- [How to Choose a San Diego Property Manager for a Single-Family Rental](https://www.azwrealty.com/how-to-choose-a-property-manager-san-diego/): questions to ask before you sign, with our answers
+
+## Company pages
 - [FAQ](https://www.azwrealty.com/faq/)
 - [Our Promise](https://www.azwrealty.com/our-promise/)
 - [Why Choose Us](https://www.azwrealty.com/why-choose-us/)
