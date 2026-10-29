@@ -4,6 +4,44 @@
   var body = document.body;
   var header = document.querySelector(".site-header");
 
+  // Lead log: tell admin.shiptolive.com where a visitor first came from when they
+  // call, email or send a form. Anonymous: no name, email, phone or IP is sent.
+  var LEAD_ENDPOINT = "https://admin.shiptolive.com/api/track";
+  var FT_KEY = "azw_first_touch";
+  function firstTouch() {
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(FT_KEY) || "null"); } catch (e) {}
+    if (saved && Date.now() - saved.t < 90 * 864e5) return saved;
+    var ref = "";
+    try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+    if (ref === location.hostname.replace(/^www\./, "")) ref = "";
+    var q = new URLSearchParams(location.search);
+    var utm = ["utm_source", "utm_medium", "utm_campaign"].map(function (k) { return q.get(k) ? k.slice(4) + "=" + q.get(k) : ""; }).filter(Boolean).join("&");
+    var ft = { t: Date.now(), ref: ref, src: q.get("utm_source") || "", utm: utm, landing: location.pathname };
+    try { localStorage.setItem(FT_KEY, JSON.stringify(ft)); } catch (e) {}
+    return ft;
+  }
+  var ft = firstTouch();
+  function logLead(event, label) {
+    var payload = JSON.stringify({
+      site: "azwrealty", event: event, label: label || "",
+      referrerHost: ft.ref, utmSource: ft.src, utm: ft.utm, landing: ft.landing,
+      page: location.pathname, lang: document.documentElement.lang || navigator.language || ""
+    });
+    try {
+      if (navigator.sendBeacon) navigator.sendBeacon(LEAD_ENDPOINT, new Blob([payload], { type: "text/plain" }));
+      else fetch(LEAD_ENDPOINT, { method: "POST", body: payload, keepalive: true, mode: "no-cors" });
+    } catch (e) {}
+  }
+  // Phone calls are how most owners reach a property manager: count them as booking clicks.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (/^tel:/i.test(href)) logLead("book_consultation_click", "Phone call");
+    else if (/^mailto:/i.test(href)) logLead("contact_click", "Email");
+  }, true);
+
   // Header shadow once the page scrolls
   function onScroll() { header.classList.toggle("scrolled", window.scrollY > 8); }
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -87,6 +125,7 @@
         .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === "false") throw j; }); })
         .then(function () {
           form.reset();
+          logLead("generate_lead", form.getAttribute("data-subject") || "Form");
           show("ok", "Thank you! Your message has been sent. We'll be in touch within one business day.");
         })
         .catch(function () {
