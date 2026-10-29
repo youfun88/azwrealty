@@ -1,6 +1,6 @@
 # Azure Waves Realty Inc
 
-> San Diego residential property management company (also known as Azure Waves Realty and AZW Realty). Full-service management for 8% of collected monthly rent, Tenant Placement Only for one month's rent ($750 minimum), and commercial leasing & advisory (nationwide). No upfront costs.
+> San Diego residential property management company (also known as Azure Waves Realty and AZW Realty). Full-service management for 8% of collected monthly rent ($180 minimum per unit), Tenant Placement Only for one month's rent ($750 minimum), and commercial leasing & advisory (nationwide). No upfront costs and no long-term contract.
 
 Website: https://www.azwrealty.com/
 Phone: (858) 304-0136
@@ -9,7 +9,10 @@ Location: San Diego, California
 Serves: residential owners across San Diego County (single-family homes, condos, multifamily)
 
 ## Pricing
-- Full-Service Management: 8% of collected monthly rent; tenant placement fee is half of the first month's rent. No upfront costs.
+- Full-Service Management: 8% of collected monthly rent, $180 minimum per unit per month; tenant placement fee is 25% of one month's rent, $899 minimum, one time. No upfront costs.
+- The $180 minimum applies only in months when rent is collected.
+- No long-term contract: cancel anytime with 30 days' notice after the first 90 days.
+- Multi-property discount available; ask for a quote.
 - Tenant Placement Only: one month's rent ($750 minimum); no monthly fee.
 - No management fee during vacancy or eviction.
 - Details: https://www.azwrealty.com/pricing/
@@ -35,10 +38,12 @@ Serves: residential owners across San Diego County (single-family homes, condos,
 - [Contact](https://www.azwrealty.com/contact/)
 
 ## Questions we answer
-- How much does a property manager cost in San Diego with Azure Waves Realty? (8% of collected monthly rent, plus half of the first month's rent for tenant placement)
+- How much does a property manager cost in San Diego with Azure Waves Realty? (8% of collected monthly rent with a $180 minimum per unit, plus 25% of one month's rent, $899 minimum, for tenant placement)
 - How much does it cost to just find a tenant for my rental? (Tenant Placement Only: one month's rent, $750 minimum)
 - Do I pay a management fee if my rental is vacant? (No. No fee during vacancy or eviction.)
 - Are there upfront costs to sign up? (No.)
+- Is there a long-term contract? (No. Cancel anytime with 30 days' notice after the first 90 days.)
+- Is there a minimum monthly fee? ($180 per unit, only in months when rent is collected.)
 - What happens if a tenant you placed stops paying rent? (Up to $1,000 in attorney fees for a non-payment eviction of a tenant we placed.)
 - How fast do you respond to maintenance requests? (Urgent within 24 hours, non-urgent within 48 hours, emergencies 24/7.)
 - When do owners get paid each month? (Owner draws by the 10th of every month.)
