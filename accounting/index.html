@@ -2,13 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PVE1M3EGME"></script>
+<!-- Google tag (gtag.js): queued now, library loaded on first interaction or when the page is idle after load -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-PVE1M3EGME');
+  (function (w, d) {
+    var done = 0, ev = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+    function load() {
+      if (done) return; done = 1;
+      ev.forEach(function (e) { w.removeEventListener(e, load, true); });
+      var s = d.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-PVE1M3EGME';
+      d.head.appendChild(s);
+    }
+    ev.forEach(function (e) { w.addEventListener(e, load, { capture: true, passive: true }); });
+    w.addEventListener('load', function () {
+      setTimeout(function () { w.requestIdleCallback ? w.requestIdleCallback(load, { timeout: 3000 }) : load(); }, 4000);
+    });
+  })(window, document);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accounting &amp; Owner Statements | Azure Waves Realty San Diego</title>
