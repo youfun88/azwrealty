@@ -27,11 +27,11 @@
 <meta name="theme-color" content="#0b2545">
 <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "RealEstateAgent", "@id": "https://www.azwrealty.com/#organization", "name": "Azure Waves Realty Inc", "url": "https://www.azwrealty.com/", "telephone": "+1-858-304-0136", "email": "contactusazw@gmail.com"}, {"@type": "ContactPage", "@id": "https://www.azwrealty.com/contact/#webpage", "url": "https://www.azwrealty.com/contact/", "name": "Contact Azure Waves Realty | San Diego Property Management", "description": "Contact Azure Waves Realty for San Diego property management: call (858) 304-0136, email contactusazw@gmail.com, or request a free rental analysis.", "isPartOf": {"@id": "https://www.azwrealty.com/#website"}, "about": {"@id": "https://www.azwrealty.com/#organization"}, "inLanguage": "en-US", "dateModified": "2026-10-29", "breadcrumb": {"@id": "https://www.azwrealty.com/contact/#breadcrumb"}}, {"@type": "BreadcrumbList", "@id": "https://www.azwrealty.com/contact/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.azwrealty.com/"}, {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.azwrealty.com/contact/"}]}]}</script>
+<link rel="preload" href="../assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/fraunces-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../styles.css?v=20261030">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "RealEstateAgent", "@id": "https://www.azwrealty.com/#organization", "name": "Azure Waves Realty Inc", "url": "https://www.azwrealty.com/", "telephone": "+1-858-304-0136", "email": "contactusazw@gmail.com"}, {"@type": "ContactPage", "@id": "https://www.azwrealty.com/contact/#webpage", "url": "https://www.azwrealty.com/contact/", "name": "Contact Azure Waves Realty | San Diego Property Management", "description": "Contact Azure Waves Realty for San Diego property management: call (858) 304-0136, email contactusazw@gmail.com, or request a free rental analysis.", "isPartOf": {"@id": "https://www.azwrealty.com/#website"}, "about": {"@id": "https://www.azwrealty.com/#organization"}, "inLanguage": "en-US", "dateModified": "2026-10-29", "breadcrumb": {"@id": "https://www.azwrealty.com/contact/#breadcrumb"}}, {"@type": "BreadcrumbList", "@id": "https://www.azwrealty.com/contact/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.azwrealty.com/"}, {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.azwrealty.com/contact/"}]}, {"@type": "FAQPage", "@id": "https://www.azwrealty.com/contact/#faq", "url": "https://www.azwrealty.com/contact/", "mainEntity": [{"@type": "Question", "name": "Which areas of San Diego County do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "From the coast to East County, our team manages single-family homes, condos, and multifamily properties in communities across the region. Our commercial services expand nationwide. Areas include San Diego, Pacific Beach, 4S Ranch, Poway, Linda Vista, Del Mar, El Cajon, National City, Old Town, Carmel Valley, Clairemont, Del Sur, Cardiff by the Sea, Fashion Valley, Solana Beach, Spring Valley, North Park, Ocean Beach, Encinitas, Mira Mesa, Vista, Bay Park, La Jolla, San Carlos, Lemon Grove, City Heights, Point Loma, Oceanside, Carlsbad, Escondido, Bay Ho, Sorrento Valley, Allied Gardens, Imperial Beach, Mission Hills, Mission Beach, Santee, Rancho Bernardo, Rancho Peñasquitos, San Marcos, Kearny Mesa, Miramar, La Mesa, Chula Vista, Mission Valley and Lakeside."}}]}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -88,7 +88,7 @@
     </div>
     <div class="grid grid-2" id="form" style="align-items:start">
       <div class="form-card">
-  <h3>Drop Us a Line!</h3>
+  <h2>Drop Us a Line!</h2>
   <p class="sub">General questions, vendor requests, maintenance requests, or property availability, we&rsquo;re here to help.</p>
   <form class="form" data-form data-subject="Website Inquiry" novalidate>
     <div class="row">
@@ -98,13 +98,13 @@
     <div class="field"><label for="contact-email">Email <span class="req">*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" required></div>
     <div class="field"><label for="contact-type">Inquiry type <span class="req">*</span></label><select id="contact-type" name="inquiry_type" required><option value="">Select an option</option><option>General Inquiry</option><option>Vendor Request</option><option>Maintenance Request</option><option>Property Availability</option><option>Other</option></select></div>
     <div class="field"><label for="contact-msg">Message</label><textarea id="contact-msg" name="message" placeholder="How can we help?"></textarea></div>
-    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
+    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-label="Leave this field empty" aria-hidden="true">
     <button class="btn btn-primary btn-block" type="submit">Send Message <svg class="i i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     <div class="form-status" role="status" aria-live="polite"></div>
   </form>
 </div>
       <div class="form-card" id="analysis">
-  <h3>Are You Charging Enough For Your Rental Property?</h3>
+  <h2>Are You Charging Enough For Your Rental Property?</h2>
   <p class="sub">Get a free, no-obligation rental analysis for your property.</p>
   <ul class="checks">
     <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Get a free initial analysis</li>
@@ -118,7 +118,7 @@
       <div class="field"><label for="page-phone">Phone <span class="req">*</span></label><input id="page-phone" name="phone" type="tel" autocomplete="tel" required></div>
     </div>
     <div class="field"><label for="page-email">Email <span class="req">*</span></label><input id="page-email" name="email" type="email" autocomplete="email" required></div>
-    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
+    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-label="Leave this field empty" aria-hidden="true">
     <button class="btn btn-primary btn-block" type="submit">Get My Free Analysis <svg class="i i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     <div class="form-status" role="status" aria-live="polite"></div>
     <p class="form-note">No obligation. We&rsquo;ll respond within one business day.</p>
@@ -147,11 +147,11 @@
         <p>San Diego property management that safeguards your hard-earned investment, with transparent communication and exceptional results for owners and renters alike.</p>
       </div>
       <div>
-        <h4>Services</h4>
+        <h2 class="foot-h">Services</h2>
         <ul><li><a href="../san-diego-property-management/">Property Management</a></li><li><a href="../marketing-and-leasing/">Marketing & Leasing</a></li><li><a href="../tenant-screening-and-leasing/">Tenant Screening & Leasing</a></li><li><a href="../rent-collection/">Rent Collection</a></li><li><a href="../maintenance-service/">Maintenance & Service</a></li><li><a href="../accounting/">Accounting</a></li></ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h2 class="foot-h">Company</h2>
         <ul>
           <li><a href="../our-promise/">Our Promise</a></li>
           <li><a href="../why-choose-us/">Why Choose Us</a></li>
@@ -160,7 +160,7 @@
         </ul>
       </div>
       <div>
-        <h4>Contact Info</h4>
+        <h2 class="foot-h">Contact Info</h2>
         <ul class="foot-contact">
           <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+18583040136">(858) 304-0136</a></li>
           <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:contactusazw@gmail.com">contactusazw@gmail.com</a></li>
