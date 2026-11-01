@@ -21,6 +21,58 @@ ol.q li{margin:0 0 12px}
 </style>
 </head>
 <body>
+<!-- review-gate: Google sign-in (checked by admin.shiptolive.com/api/review/check; approvals are checked again there) -->
+<style>
+html:not(.rv-open) body > :not(.rv-gate):not(.tab-close):not(.tab-close-hint):not(script):not(style){display:none!important}
+html.rv-open .rv-gate{display:none}
+.rv-gate{max-width:440px;margin:12vh auto;padding:28px 24px;background:#fff;border:1px solid #e3ddd2;border-radius:14px;text-align:center;font-family:system-ui,-apple-system,"PingFang TC",sans-serif;color:#222}
+.rv-gate h1{font-size:20px;margin:0 0 8px;padding:0}.rv-gate p{color:#555;font-size:15px;line-height:1.6;margin:8px 0}
+#rvBtn{display:flex;justify-content:center;margin:18px 0 6px;min-height:44px}
+.rv-err{color:#b91c1c}
+.rv-who{position:fixed;bottom:12px;right:12px;z-index:10;font:13px system-ui,sans-serif;color:#555;background:#fff;border:1px solid #e3ddd2;border-radius:999px;padding:8px 12px}
+.rv-who button{border:0;background:none;color:#1d4f91;cursor:pointer;font:inherit;padding:0 0 0 8px;min-height:24px}
+</style>
+<div class="rv-gate" role="dialog" aria-labelledby="rvT">
+<h1 id="rvT">請先登入 · Sign in to review</h1>
+<p>這個頁面只開放給網站負責人和開發者，請用受邀的 Google 帳號登入。</p>
+<p>This page is for the site owner and developer. Sign in with your invited Google account.</p>
+<div id="rvBtn"></div>
+<p class="rv-err" role="alert" hidden></p>
+</div>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+(function(){
+  var SITE='azwrealty', PAGE='yufan', CLIENT='256863040665-48dc9gc0eig6fu68m4to2upqtuamd60k.apps.googleusercontent.com', API='https://admin.shiptolive.com/api/review/check';
+  var err=document.querySelector('.rv-err');
+  function fail(m){err.hidden=false;err.textContent=m;}
+  function exp(c){try{return JSON.parse(atob(c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).exp*1000;}catch(e){return 0;}}
+  function forget(){try{sessionStorage.removeItem('rv_cred');}catch(e){}}
+  function who(email){
+    var d=document.createElement('div');d.className='rv-who';d.textContent=email;
+    var b=document.createElement('button');b.type='button';b.textContent='登出 Sign out';
+    b.onclick=function(){forget();if(window.google&&google.accounts)google.accounts.id.disableAutoSelect();location.reload();};
+    d.appendChild(b);document.body.appendChild(d);
+  }
+  function check(cred,silent){
+    return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({site:SITE,page:PAGE,credential:cred})})
+      .then(function(r){return r.json().catch(function(){return {};});})
+      .then(function(j){
+        if(j&&j.ok){window.RV_CRED=cred;try{sessionStorage.setItem('rv_cred',cred);}catch(e){}
+          document.documentElement.classList.add('rv-open');who(j.email);return;}
+        forget();if(!silent)fail('這個 Google 帳號沒有這個頁面的權限。This Google account does not have access to this page.');
+      })
+      .catch(function(){if(!silent)fail('無法確認登入，請稍後再試。Could not check your sign-in. Please try again.');});
+  }
+  var saved=null;try{saved=sessionStorage.getItem('rv_cred');}catch(e){}
+  if(saved&&exp(saved)>Date.now()+120000)check(saved,true);
+  (function wait(){
+    if(!(window.google&&google.accounts&&google.accounts.id))return setTimeout(wait,100);
+    google.accounts.id.initialize({client_id:CLIENT,auto_select:true,callback:function(r){err.hidden=true;check(r.credential,false);}});
+    google.accounts.id.renderButton(document.getElementById('rvBtn'),{theme:'outline',size:'large',text:'signin_with'});
+  })();
+})();
+</script>
+
 <button type="button" class="tab-close" aria-label="關閉分頁 Close tab" title="關閉分頁 Close tab">&times;</button>
 <p class="tab-close-hint" role="status" hidden>請直接關閉這個分頁。You can close this tab now.</p>
 <style>
@@ -82,13 +134,13 @@ document.querySelector('.tab-close').addEventListener('click',function(){
         var btns=f.querySelectorAll('button'); btns.forEach(function(x){x.disabled=true;});
         st.className='status';st.textContent='送出中… Sending…';
         fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},
-          body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:general?'changes':d,comment:comment,reviewer:nm.value.trim(),page:location.href})})
+          body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:general?'changes':d,comment:comment,reviewer:nm.value.trim(),credential:window.RV_CRED||'',page:location.href})})
         .then(function(r){return r.json().catch(function(){return {};});})
         .then(function(j){
           if(j&&j.ok){st.className='status ok';st.textContent='已送出，謝謝！Sent, thank you.';}
           else throw new Error('not ok');
         })
-        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留，請稍後再試。Could not send; your text is kept. Please try again.';})
+        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留。登入超過一小時請重新整理頁面再登入，或稍後再試。Could not send; your text is kept. If you signed in over an hour ago, reload and sign in again.';})
         .finally(function(){btns.forEach(function(x){x.disabled=false;});});
       });
     });
