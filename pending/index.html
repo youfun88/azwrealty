@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><title>Drafts for review | Azure Waves Realty</title>
+<style>
+body{font-family:system-ui,-apple-system,"PingFang TC",sans-serif;max-width:760px;margin:40px auto;padding:0 16px;color:#222;line-height:1.6;background:#faf8f4}
+a{color:#1d4f91}h1{font-size:24px}h2{font-size:18px;margin-top:32px}p,li{color:#444}
+.item{background:#fff;border:1px solid #e3ddd2;border-radius:10px;padding:16px;margin:16px 0}
+.item h3{font-size:17px;margin:0 0 6px;color:#222}
+.links a{display:inline-block;min-height:44px;line-height:44px;margin-right:16px}
+.form label{display:block;font-size:14px;margin:10px 0 4px;color:#333}
+.form textarea,.form input{width:100%;box-sizing:border-box;font:inherit;padding:10px;border:1px solid #c9c2b5;border-radius:8px;background:#fff}
+.form textarea{min-height:96px}
+.form input{min-height:44px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.btns button{min-height:44px;padding:0 18px;font:inherit;font-weight:600;border-radius:22px;border:1px solid #1d4f91;cursor:pointer}
+.approve{background:#1d4f91;color:#fff}.changes{background:#fff;color:#1d4f91}
+.btns button:disabled{opacity:.5;cursor:default}
+.status{min-height:1.5em;margin-top:8px;font-size:14px}
+.status.ok{color:#166534}.status.err{color:#b91c1c}
+ol.q li{margin:0 0 12px}
+</style>
+</head>
+<body><h1>Drafts for review</h1>
+<p>Website updates for the Azure Waves Realty owner to review. Not linked from the site and not indexed. Nothing goes live until approved. Use the buttons under each draft to approve or request changes.</p>
+<p class="updated">Updated 2026-11-01.</p>
+
+<!-- Item markup (copy for each draft; data-item must equal the board title exactly):
+<div class="item" data-item="TITLE">
+<h3>1. TITLE</h3>
+<p>What changed and why.</p>
+<div class="links"><a href="/pending/...">Preview</a><a href="/...">Live version</a></div>
+</div>
+-->
+<h2>Waiting for approval</h2>
+<p class="empty">Nothing yet.</p>
+
+<script>
+(function(){
+  var API='https://admin.shiptolive.com/api/contact';
+  document.querySelectorAll('.item').forEach(function(box,i){
+    var item=box.getAttribute('data-item'), general=item==='Questions';
+    var f=document.createElement('div'); f.className='form';
+    var id='c'+i;
+    f.innerHTML='<label for="'+id+'">'+(general?'回覆 / Answers':'意見 / Comments')+'</label>'+
+      '<textarea id="'+id+'"></textarea>'+
+      '<label for="'+id+'n">您的名字 / Your name（選填 optional）</label><input id="'+id+'n" type="text" autocomplete="name">'+
+      '<div class="btns">'+(general?'<button type="button" class="approve" data-d="answers">送出回覆 Send</button>':
+        '<button type="button" class="approve" data-d="approve">同意上線 Approve</button><button type="button" class="changes" data-d="changes">需要修改 Request changes</button>')+
+      '</div><div class="status" role="status" aria-live="polite"></div>';
+    box.appendChild(f);
+    var ta=f.querySelector('textarea'), nm=f.querySelector('input'), st=f.querySelector('.status');
+    f.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        var d=b.getAttribute('data-d'), comment=ta.value.trim();
+        if((d==='changes'||d==='answers')&&!comment){st.className='status err';st.textContent=d==='changes'?'請先填寫要修改的地方。Please describe the changes.':'請先填寫回覆。Please write your answers.';ta.focus();return;}
+        var btns=f.querySelectorAll('button'); btns.forEach(function(x){x.disabled=true;});
+        st.className='status';st.textContent='送出中… Sending…';
+        fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},
+          body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:general?'changes':d,comment:comment,reviewer:nm.value.trim(),page:location.href})})
+        .then(function(r){return r.json().catch(function(){return {};});})
+        .then(function(j){
+          if(j&&j.ok){st.className='status ok';st.textContent='已送出，謝謝！Sent, thank you.';}
+          else throw new Error('not ok');
+        })
+        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留，請稍後再試，或寄到 contact@wulawintl.com。Could not send; your text is kept. Please try again.';})
+        .finally(function(){btns.forEach(function(x){x.disabled=false;});});
+      });
+    });
+  });
+})();
+</script>
+</body></html>

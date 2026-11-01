@@ -3,38 +3,62 @@
 
 User-agent: *
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Bingbot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: GPTBot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Claude-User
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Perplexity-User
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /pending
+Disallow: /log
 
 Sitemap: https://www.azwrealty.com/sitemap.xml
