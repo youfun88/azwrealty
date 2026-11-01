@@ -48,7 +48,27 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
-<p class="empty">Nothing yet.</p>
+<div class="item" data-item="Tenant screening guide: California rules and late-rent steps">
+<h3>1. Tenant screening guide: California rules and late-rent steps</h3>
+<p><strong>What changes:</strong> two additions to the guide on how you screen tenants and collect rent, highlighted in yellow in the preview. One lists what California law requires during screening. The other lists the steps for unpaid rent, from the three-day notice to the court process. Your existing text and prices stay the same.</p>
+<p><strong>Why:</strong> when AI assistants were asked to recommend a San Diego manager for screening and rent collection, they chose companies that spell out concrete steps. Azure Waves was not named or cited in any of the 4 questions tested.</p>
+<p><strong>Please check:</strong> these sections describe California law, not your own procedures. Each point comes from the California Department of Real Estate&rsquo;s 2026 guide, which is linked in the draft. Please approve only if you are comfortable with how they read next to your process.</p>
+<div class="links"><a href="/pending/how-tenant-screening-and-rent-collection-work/">Preview</a><a href="/how-tenant-screening-and-rent-collection-work/">Live version</a></div>
+</div>
+
+<h2>Questions for the owner</h2>
+<p>Your answers let us add your own process to the guide. AI assistants tended to pick companies that publish details like these. If you would rather not publish something, just say so.</p>
+<ol class="q">
+<li>What day of the month is rent due? Is there a grace period, and what is the late fee?</li>
+<li>When rent is missed, how many days pass before you serve a three-day notice?</li>
+<li>Do you have written screening criteria applied to every applicant, such as an income multiple or minimum credit score? Which of them may we publish?</li>
+<li>How is criminal history considered in your written criteria? The site lists it as one of the seven checks, so we would like to describe it accurately.</li>
+<li>Do you charge applicants a screening fee? If so, how much?</li>
+</ol>
+<div class="item" data-item="Questions">
+<h3>Answers to the questions</h3>
+<p>You can answer by number.</p>
+</div>
 
 <script>
 (function(){
@@ -78,7 +98,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
           if(j&&j.ok){st.className='status ok';st.textContent='已送出，謝謝！Sent, thank you.';}
           else throw new Error('not ok');
         })
-        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留，請稍後再試，或寄到 contact@wulawintl.com。Could not send; your text is kept. Please try again.';})
+        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留，請稍後再試。Could not send; your text is kept. Please try again.';})
         .finally(function(){btns.forEach(function(x){x.disabled=false;});});
       });
     });
