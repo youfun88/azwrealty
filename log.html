@@ -46,7 +46,7 @@ html.rv-open .rv-gate{display:none}
   var err=document.querySelector('.rv-err');
   function fail(m){err.hidden=false;err.textContent=m;}
   function exp(c){try{return JSON.parse(atob(c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).exp*1000;}catch(e){return 0;}}
-  function forget(){try{sessionStorage.removeItem('rv_cred');}catch(e){}}
+  function forget(){try{localStorage.removeItem('rv_cred');}catch(e){}}
   function who(email){
     var d=document.createElement('div');d.className='rv-who';d.textContent=email;
     var b=document.createElement('button');b.type='button';b.textContent='登出 Sign out';
@@ -57,18 +57,19 @@ html.rv-open .rv-gate{display:none}
     return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({site:SITE,page:PAGE,credential:cred})})
       .then(function(r){return r.json().catch(function(){return {};});})
       .then(function(j){
-        if(j&&j.ok){window.RV_CRED=cred;try{sessionStorage.setItem('rv_cred',cred);}catch(e){}
+        if(j&&j.ok){var keep=j.session||cred;window.RV_CRED=keep;try{localStorage.setItem('rv_cred',keep);}catch(e){}
           document.documentElement.classList.add('rv-open');who(j.email);return;}
         forget();if(!silent)fail('這個 Google 帳號沒有這個頁面的權限。This Google account does not have access to this page.');
       })
       .catch(function(){if(!silent)fail('無法確認登入，請稍後再試。Could not check your sign-in. Please try again.');});
   }
-  var saved=null;try{saved=sessionStorage.getItem('rv_cred');}catch(e){}
-  if(saved&&exp(saved)>Date.now()+120000)check(saved,true);
+  var saved=null;try{saved=localStorage.getItem('rv_cred');}catch(e){}
+  var live=saved&&exp(saved)>Date.now()+120000;if(live)check(saved,true);
   (function wait(){
     if(!(window.google&&google.accounts&&google.accounts.id))return setTimeout(wait,100);
     google.accounts.id.initialize({client_id:CLIENT,auto_select:true,callback:function(r){err.hidden=true;check(r.credential,false);}});
     google.accounts.id.renderButton(document.getElementById('rvBtn'),{theme:'outline',size:'large',text:'signin_with'});
+    if(!live)google.accounts.id.prompt();
   })();
 })();
 </script>
