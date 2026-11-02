@@ -343,6 +343,21 @@ a.card:hover .more .i { transform: translateX(3px); }
 .tick-list li { display: flex; gap: 8px; align-items: center; color: var(--ink); font-size: .95rem; }
 .tick-list .i { color: var(--ok); width: 18px; height: 18px; stroke-width: 2.4; }
 .prose > p:first-child { font-size: 1.12rem; color: var(--ink); }
+
+/* FAQ: jump links and owner guides under the intro */
+.faq-label { margin: 0 0 12px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.faq-jump { margin: 28px 0 0; }
+.faq-jump ul, .faq-guides ul { list-style: none; margin: 0; padding: 0; }
+.faq-jump ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.faq-jump li, .faq-guides li { margin: 0; padding: 0; }
+.prose .faq-jump a { display: inline-flex; align-items: center; min-height: 40px; padding: 7px 15px; border-radius: 999px; background: var(--sky-soft); color: var(--azure-dark); font-size: .92rem; font-weight: 600; text-decoration: none; transition: background .15s, color .15s; }
+.prose .faq-jump a:hover { background: var(--azure); color: var(--white); }
+.faq-guides { margin: 24px 0 0; padding: 20px 22px 8px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow-sm); }
+.faq-guides li + li { border-top: 1px solid var(--line); }
+.prose .faq-guides a { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 48px; padding: 11px 0; color: var(--ink); font-size: .98rem; font-weight: 500; line-height: 1.4; text-decoration: none; }
+.faq-guides svg { flex: none; color: var(--muted); transition: transform .15s, color .15s; }
+.prose .faq-guides a:hover { color: var(--azure); }
+.faq-guides a:hover svg { color: var(--azure); transform: translateX(3px); }
 .prose h2 { font-size: 1.9rem; margin-top: 1.6em; }
 .callout { margin-top: 28px; border-left: 4px solid var(--azure); background: var(--sky-soft); border-radius: 0 var(--radius) var(--radius) 0; padding: 22px 26px; color: var(--ink); }
 .callout p { margin: 0; }
