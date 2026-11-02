@@ -64,6 +64,8 @@ html.rv-open .rv-gate{display:none}
       .catch(function(){if(!silent)fail('無法確認登入，請稍後再試。Could not check your sign-in. Please try again.');});
   }
   var saved=null;try{saved=localStorage.getItem('rv_cred');}catch(e){}
+  var handoff=location.hash.match(/^#rv=([\w.-]+)$/);
+  if(handoff){saved=handoff[1];history.replaceState(null,'',location.pathname+location.search);}
   var live=saved&&exp(saved)>Date.now()+120000;if(live)check(saved,true);
   (function wait(){
     if(!(window.google&&google.accounts&&google.accounts.id))return setTimeout(wait,100);
