@@ -167,4 +167,30 @@ document.querySelector('.tab-close').addEventListener('click',function(){
   });
 })();
 </script>
+<script id="rv-received">
+/* Shows replies already sent, so a refresh doesn't look as if they were lost. */
+(function(){
+  var n=0;
+  (function wait(){
+    if(!window.RV_CRED){if(++n<1200)setTimeout(wait,500);return;}
+    fetch('https://admin.shiptolive.com/api/review/check',{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({site:'azwrealty',page:'owner',credential:window.RV_CRED})})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      ((j&&j.received)||[]).forEach(function(r){
+        document.querySelectorAll('.item').forEach(function(box){
+          if(box.getAttribute('data-item')!==r.item)return;
+          var d=document.createElement('div');
+          d.style.cssText='margin:12px 0;padding:10px 12px;border:1px solid #bbf7d0;border-radius:8px;background:#f0fdf4;color:#166534;font-size:14px;line-height:1.5';
+          var t=document.createElement('strong');
+          t.textContent=r.decision==='approve'?'已同意（'+r.date+'），下次更新時上線。Approved '+r.date+'. Goes live at the next update.':'已收到您 '+r.date+' 的回覆，8 小時內會處理。Received '+r.date+'. It gets handled at the next update, within 8 hours.';
+          d.appendChild(t);
+          if(r.comment){var q=document.createElement('div');q.style.cssText='margin-top:6px;white-space:pre-wrap;color:#1f2937';q.textContent=r.comment;d.appendChild(q);}
+          var f=box.querySelector('.form');if(f)box.insertBefore(d,f);else box.appendChild(d);
+        });
+      });
+    })
+    .catch(function(){});
+  })();
+})();
+</script>
 </body></html>
