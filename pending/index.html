@@ -103,6 +103,12 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
+<!-- Always here, above the drafts. Keep it on every run: the owner's standing way to ask for a change (board item "Suggestions"). -->
+<style>details.suggest>summary{cursor:pointer;font-size:17px;font-weight:600;color:#222;min-height:28px;list-style-position:inside}details.suggest>summary:focus-visible{outline:2px solid #1d4f91;outline-offset:2px;border-radius:4px}details.suggest p{margin-top:10px}</style>
+<details class="item suggest" data-item="Suggestions">
+<summary>想修改網站嗎？ · Suggest a change</summary>
+<p>隨時都可以在這裡告訴我們想改什麼，例如文字、價格或新的內容。系統每 8 小時會處理一次：簡單的修改會直接更新，較大的內容會先放到這頁讓您確認。Tell us anything you'd like changed. It's handled every 8 hours: simple edits go live, and bigger content comes back here for your OK first.</p>
+</details>
 <div class="item" data-item="Rental repairs guide: what California landlords must fix">
 <h3>1. Rental repairs guide: what California landlords must fix</h3>
 <p><strong>What changes:</strong> a new owner guide at /san-diego-rental-repairs/. It covers what makes a rental habitable, what the tenant is responsible for, whether a lease can shift repairs to the tenant, how much notice you give before entering, and what a tenant can do if repairs are not made. Your prices, promises and contact details are unchanged.</p>
@@ -130,13 +136,13 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 (function(){
   var API='https://admin.shiptolive.com/api/contact';
   document.querySelectorAll('.item').forEach(function(box,i){
-    var item=box.getAttribute('data-item'), general=item==='Questions';
+    var item=box.getAttribute('data-item'), suggest=item==='Suggestions', general=suggest||item==='Questions';
     var f=document.createElement('div'); f.className='form';
     var id='c'+i;
-    f.innerHTML='<label for="'+id+'">'+(general?'回覆 / Answers':'意見 / Comments')+'</label>'+
+    f.innerHTML='<label for="'+id+'">'+(suggest?'您想改什麼 / What would you like changed':general?'回覆 / Answers':'意見 / Comments')+'</label>'+
       '<textarea id="'+id+'"></textarea>'+
       '<label for="'+id+'n">您的名字 / Your name（選填 optional）</label><input id="'+id+'n" type="text" autocomplete="name">'+
-      '<div class="btns">'+(general?'<button type="button" class="approve" data-d="answers">送出回覆 Send</button>':
+      '<div class="btns">'+(general?'<button type="button" class="approve" data-d="answers">'+(suggest?'送出建議 Send':'送出回覆 Send')+'</button>':
         '<button type="button" class="approve" data-d="approve">同意上線 Approve</button><button type="button" class="changes" data-d="changes">需要修改 Request changes</button>')+
       '</div><div class="status" role="status" aria-live="polite"></div>';
     box.appendChild(f);
@@ -151,7 +157,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
           body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:general?'changes':d,comment:comment,reviewer:nm.value.trim(),credential:window.RV_CRED||'',page:location.href})})
         .then(function(r){return r.json().catch(function(){return {};});})
         .then(function(j){
-          if(j&&j.ok){st.className='status ok';st.textContent='已送出，謝謝！Sent, thank you.';}
+          if(j&&j.ok){st.className='status ok';st.textContent=suggest?'已收到，謝謝！8 小時內會處理，結果會寫在更新紀錄。Received, thank you. We\'ll handle it within 8 hours and note it in the change log.':'已送出，謝謝！Sent, thank you.';if(suggest){ta.value='';}}
           else throw new Error('not ok');
         })
         .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留。登入超過一小時請重新整理頁面再登入，或稍後再試。Could not send; your text is kept. If you signed in over an hour ago, reload and sign in again.';})
