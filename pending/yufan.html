@@ -18,6 +18,11 @@ a{color:#1d4f91}h1{font-size:24px}h2{font-size:18px;margin-top:32px}p,li{color:#
 .status{min-height:1.5em;margin-top:8px;font-size:14px}
 .status.ok{color:#166534}.status.err{color:#b91c1c}
 ol.q li{margin:0 0 12px}
+.ba{display:block;margin:6px 0;padding:8px 10px;border-left:3px solid;border-radius:4px}
+.ba b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.ba.was{color:#b91c1c;background:#fef2f2;border-color:#b91c1c}
+.ba.now{color:#166534;background:#f0fdf4;border-color:#166534}
+.ba code{color:inherit;background:none}
 </style>
 </head>
 <body>
@@ -106,8 +111,8 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <div class="item" data-item="[Yufan] FAQ schema and llms.txt answers for the new guides">
 <h3>1. [Yufan] FAQ schema and llms.txt answers for the new guides</h3>
 <p><strong>Finding:</strong> the AI check named and cited Azure Waves in 0 of 4 questions, and AI Overviews cited the site for 0 of 8 tracked queries. Three guide changes went live today, but the two new questions on the screening guide are not in its FAQPage schema, and llms.txt only lists the two new guides in its Owner guides section, with no direct answers. The other report items are off-site, already done, or have too little data: Google shows 14 impressions in 28 days.</p>
-<p><strong>/how-tenant-screening-and-rent-collection-work/ FAQPage JSON-LD:</strong></p><ul><li>5 questions &rarr; 7 questions. Added: &ldquo;What does California law require during tenant screening?&rdquo; and &ldquo;What is the California process for unpaid rent?&rdquo;. Both answers shorten the text the owner approved on the page.</li></ul>
-<p><strong>llms.txt, Direct answers:</strong></p><ul><li>4 answers &rarr; 6 answers. Added: &ldquo;What rules apply to landlords in San Diego?&rdquo; and &ldquo;What should I do before renting out my San Diego home after I move?&rdquo;. Both use the approved Short answer text from those guides.</li></ul>
+<p><strong>/how-tenant-screening-and-rent-collection-work/ FAQPage JSON-LD:</strong></p><ul><li><span class="ba was"><b>Before</b>5 questions</span><span class="ba now"><b>After</b>7 questions. Added: &ldquo;What does California law require during tenant screening?&rdquo; and &ldquo;What is the California process for unpaid rent?&rdquo;. Both answers shorten the text the owner approved on the page.</span></li></ul>
+<p><strong>llms.txt, Direct answers:</strong></p><ul><li><span class="ba was"><b>Before</b>4 answers</span><span class="ba now"><b>After</b>6 answers. Added: &ldquo;What rules apply to landlords in San Diego?&rdquo; and &ldquo;What should I do before renting out my San Diego home after I move?&rdquo;. Both use the approved Short answer text from those guides.</span></li></ul>
 <p><strong>Your call:</strong> the second schema question is worded &ldquo;What is the California process for unpaid rent?&rdquo; to match the bold line on the page, because the H2 there, &ldquo;What if a tenant pays late or stops paying?&rdquo;, also covers your fee promise. No visible text changes, so there is no preview copy.</p>
 <p>Branch: <code>seo/guide-faq-schema-llms</code>.</p>
 <div class="links"><a href="/how-tenant-screening-and-rent-collection-work/">Live page</a><a href="/llms.txt">Live llms.txt</a></div>
