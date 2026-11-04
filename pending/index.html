@@ -193,6 +193,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
         document.querySelectorAll('.item').forEach(function(box){
           if(box.getAttribute('data-item')!==r.item)return;
           var d=document.createElement('div');
+          d.className='rv-received-note';d.setAttribute('data-item',r.item);
           d.style.cssText='margin:12px 0;padding:10px 12px;border:1px solid #bbf7d0;border-radius:8px;background:#f0fdf4;color:#166534;font-size:14px;line-height:1.5';
           var t=document.createElement('strong');
           t.textContent=r.decision==='approve'?'已同意（'+r.date+'），下次更新時上線。Approved '+r.date+'. Goes live at the next update.':'已收到您 '+r.date+' 的回覆，8 小時內會處理。Received '+r.date+'. It gets handled at the next update, within 8 hours.';
@@ -204,6 +205,43 @@ document.querySelector('.tab-close').addEventListener('click',function(){
     })
     .catch(function(){});
   })();
+})();
+</script>
+<script id="rv-undo">
+/* Undo the last reply on an item, while the site job hasn't acted on it yet. */
+(function(){
+  var API='https://admin.shiptolive.com/api/contact';
+  function addUndo(holder, item, onDone){
+    if(!item||holder.querySelector('.rv-undo-btn'))return;
+    var b=document.createElement('button');
+    b.type='button';b.className='rv-undo-btn';b.textContent='復原 Undo';
+    b.style.cssText='margin-left:10px;padding:2px 10px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer';
+    b.onclick=function(){
+      b.disabled=true;b.textContent='復原中… Undoing…';
+      fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:'undo',credential:window.RV_CRED||'',page:location.href})})
+      .then(function(r){return r.json().catch(function(){return {};});})
+      .then(function(j){
+        if(j&&j.ok){onDone();return;}
+        b.remove();
+        var m=document.createElement('span');m.style.cssText='margin-left:10px;color:#b91c1c';
+        m.textContent=j&&j.error==='late'?'已經處理過，無法在這裡復原。Already handled; it can no longer be undone here.':'復原失敗，請稍後再試。Could not undo; please try again.';
+        holder.appendChild(m);
+      })
+      .catch(function(){b.disabled=false;b.textContent='復原 Undo';});
+    };
+    holder.appendChild(b);
+  }
+  function scan(){
+    document.querySelectorAll('.item .status.ok').forEach(function(st){
+      var box=st.closest('.item');if(!box)return;
+      addUndo(st,box.getAttribute('data-item'),function(){st.className='status';st.textContent='已復原，可以重新送出。Undone. You can send again.';});
+    });
+    document.querySelectorAll('.rv-received-note').forEach(function(n){
+      addUndo(n.querySelector('strong')||n,n.getAttribute('data-item'),function(){n.remove();});
+    });
+  }
+  new MutationObserver(scan).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+  scan();
 })();
 </script>
 </body></html>
