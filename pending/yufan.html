@@ -98,7 +98,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </script>
 <h1>Developer review · SEO / AEO / GEO</h1>
 <p>Search and AI-visibility changes for Yufan to approve: titles, descriptions, schema, internal links, llms.txt, sitemap, keywords. Content changes go to the owner at <a href="/pending/">/pending</a>. Not linked from the site and not indexed. The GX10 job applies approved changes at its next run (every 8 hours).</p>
-<p class="updated">Updated 2026-11-04.</p>
+<p class="updated">Updated 2026-11-05.</p>
 
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
 <div class="item" data-item="TITLE">
@@ -108,7 +108,16 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
-<p>Nothing yet.</p>
+<div class="item" data-item="[Yufan] Name rent collection services in San Diego in the rent collection page title">
+<h3>1. [Yufan] Name rent collection services in San Diego in the rent collection page title</h3>
+<p><strong>Why:</strong> the AI check (2026-10-29) asked &ldquo;Recommend a San Diego property manager for tenant screening and rent collection.&rdquo; and did not name Azure Waves or cite the site. The screening page already got the same treatment (&ldquo;Tenant Screening Services in San Diego&rdquo;, live 2026-11-04); the rent collection page title still says only &ldquo;Rent Collection&rdquo;. <strong>Thin evidence:</strong> the keyword research has no volume for &ldquo;rent collection san diego&rdquo;, and GSC (10-05 to 11-01) shows no impressions for /rent-collection/. This is a small wording match, not a measured win.</p>
+<p><strong>What changes</strong> (branch <code>seo/rent-collection-services-title</code>; page text unchanged):</p>
+<ul>
+<li><strong>/rent-collection/ &lt;title&gt;, og:title, twitter:title:</strong><span class="ba was"><b>Before</b>Rent Collection | Azure Waves Realty San Diego</span><span class="ba now"><b>After</b>Rent Collection Services in San Diego | Azure Waves</span></li>
+<li><strong>sitemap.xml lastmod for /rent-collection/:</strong><span class="ba was"><b>Before</b>2026-10-29</span><span class="ba now"><b>After</b>2026-11-05</span></li>
+</ul>
+<div class="links"><a href="/rent-collection/">Live version</a></div>
+</div>
 
 <script>
 (function(){
