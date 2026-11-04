@@ -214,27 +214,27 @@ document.querySelector('.tab-close').addEventListener('click',function(){
   function addUndo(holder, item, onDone){
     if(!item||holder.querySelector('.rv-undo-btn'))return;
     var b=document.createElement('button');
-    b.type='button';b.className='rv-undo-btn';b.textContent='復原 Undo';
-    b.style.cssText='margin-left:10px;padding:2px 10px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer';
+    b.type='button';b.className='rv-undo-btn';b.textContent='取消這次回覆 Cancel this request';
+    b.style.cssText='margin-left:10px;padding:2px 10px;border:1px solid #b91c1c;border-radius:999px;background:#fef2f2;color:#b91c1c;font:inherit;font-size:13px;font-weight:600;cursor:pointer';
     b.onclick=function(){
-      b.disabled=true;b.textContent='復原中… Undoing…';
+      b.disabled=true;b.textContent='取消中… Cancelling…';
       fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({kind:'review',site:'azwrealty',item:item,decision:'undo',credential:window.RV_CRED||'',page:location.href})})
       .then(function(r){return r.json().catch(function(){return {};});})
       .then(function(j){
         if(j&&j.ok){onDone();return;}
         b.remove();
         var m=document.createElement('span');m.style.cssText='margin-left:10px;color:#b91c1c';
-        m.textContent=j&&j.error==='late'?'已經處理過，無法在這裡復原。Already handled; it can no longer be undone here.':'復原失敗，請稍後再試。Could not undo; please try again.';
+        m.textContent=j&&j.error==='late'?'已經處理過，無法取消。Already handled; it can no longer be cancelled.':'取消失敗，請稍後再試。Could not cancel; please try again.';
         holder.appendChild(m);
       })
-      .catch(function(){b.disabled=false;b.textContent='復原 Undo';});
+      .catch(function(){b.disabled=false;b.textContent='取消這次回覆 Cancel this request';});
     };
     holder.appendChild(b);
   }
   function scan(){
     document.querySelectorAll('.item .status.ok').forEach(function(st){
       var box=st.closest('.item');if(!box)return;
-      addUndo(st,box.getAttribute('data-item'),function(){st.className='status';st.textContent='已復原，可以重新送出。Undone. You can send again.';});
+      addUndo(st,box.getAttribute('data-item'),function(){st.className='status';st.textContent='已取消這次回覆，可以重新送出。Cancelled. You can send again.';});
     });
     document.querySelectorAll('.rv-received-note').forEach(function(n){
       addUndo(n.querySelector('strong')||n,n.getAttribute('data-item'),function(){n.remove();});
