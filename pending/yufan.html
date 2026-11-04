@@ -108,16 +108,15 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
-<div class="item" data-item="[Yufan] Link the owner guides from the homepage quick answers">
-<h3>1. [Yufan] Link the owner guides from the homepage quick answers</h3>
-<p><strong>Finding:</strong> the AI check (run 2026-10-29) did not name Azure Waves or cite the site on any of its 4 questions. Three of them match an owner guide: &ldquo;Best property management company in San Diego for a single-family rental?&rdquo;, &ldquo;How much does property management cost in San Diego, and who charges around 8%?&rdquo; and &ldquo;Recommend a San Diego property manager for tenant screening and rent collection.&rdquo; The homepage answers these in its Quick Answers block, but it links only to the fees guide (once, lower down). The single-family guide and the screening guide get no homepage link. The fees guide is the page with the most Google impressions (19 in the last 28 days, position 35.7). Each answer gets a second link, to the guide on that question, with a descriptive anchor. This is a small bet with thin data.</p>
-<p><strong>Homepage, Quick Answers links (answer text unchanged):</strong></p>
-<ul><li><strong>Who manages single-family rentals in San Diego?</strong><span class="ba was"><b>Before</b>Property management in San Diego</span><span class="ba now"><b>After</b>Property management in San Diego &middot; How to choose a San Diego property manager</span></li>
-<li><strong>Who manages rental properties in San Diego with no upfront fees?</strong><span class="ba was"><b>Before</b>See all fees</span><span class="ba now"><b>After</b>See all fees &middot; San Diego property management fees, explained</span></li>
-<li><strong>Who handles tenant screening and rent collection in San Diego?</strong><span class="ba was"><b>Before</b>See the step-by-step process</span><span class="ba now"><b>After</b>See the step-by-step process &middot; How we screen tenants and collect rent</span></li></ul>
-<p><strong>Your call:</strong> the new links go after the existing ones, separated by a dot, in the style /san-diego-property-management/ already uses. No other homepage change, so there is no preview copy. The landlord rules and moving guides still have no homepage link because no Quick Answer is about them.</p>
-<p>Branch: <code>seo/homepage-guide-links</code>.</p>
-<div class="links"><a href="/">Live homepage</a><a href="/how-to-choose-a-property-manager-san-diego/">Single-family guide</a><a href="/san-diego-property-management-fees/">Fees guide</a><a href="/how-tenant-screening-and-rent-collection-work/">Screening guide</a></div>
+<div class="item" data-item="[Yufan] Link the fees guide from the property management hub">
+<h3>1. [Yufan] Link the fees guide from the property management hub</h3>
+<p><strong>Finding:</strong> Google Search Console (2026-10-04 to 10-31): the fees guide is the site's page with the most impressions (19, average position 35.7, 0 clicks), almost all from &ldquo;property management fees san diego&rdquo; (18 impressions, position 37.6). The hub page /san-diego-property-management/ targets the 4,400/mo &ldquo;san diego property manager&rdquo; terms and its title leads with the 8% fee, and its short answer links every owner guide except the fees guide. The homepage got this link at the last publish. The AI check (2026-10-29) did not name Azure Waves on the cost question either. This is one more internal link, a small bet with thin data.</p>
+<p><strong>/san-diego-property-management/, short answer links (answer text unchanged):</strong></p>
+<ul><li><strong>Links row:</strong><span class="ba was"><b>Before</b>Compare fees &middot; How it works &middot; How to choose a manager &middot; Landlord rules &middot; Renting out after you move</span><span class="ba now"><b>After</b>Compare fees &middot; San Diego property management fees, explained &middot; How it works &middot; How to choose a manager &middot; Landlord rules &middot; Renting out after you move</span></li>
+<li><strong>WebPage dateModified and sitemap lastmod:</strong><span class="ba was"><b>Before</b>2026-11-02</span><span class="ba now"><b>After</b>2026-11-04</span></li></ul>
+<p><strong>Your call:</strong> same anchor text the homepage uses. No look change beyond one more link in the row, so no preview copy.</p>
+<p>Branch: <code>seo/hub-fees-guide-link</code>.</p>
+<div class="links"><a href="/san-diego-property-management/">Live hub page</a><a href="/san-diego-property-management-fees/">Fees guide</a></div>
 </div>
 
 <script>
