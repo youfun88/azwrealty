@@ -98,7 +98,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </script>
 <h1>Developer review · SEO / AEO / GEO</h1>
 <p>Search and AI-visibility changes for Yufan to approve: titles, descriptions, schema, internal links, llms.txt, sitemap, keywords. Content changes go to the owner at <a href="/pending/">/pending</a>. Not linked from the site and not indexed. The GX10 job applies approved changes at its next run (every 8 hours).</p>
-<p class="updated">Updated 2026-11-06.</p>
+<p class="updated">Updated 2026-11-07.</p>
 
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
 <div class="item" data-item="TITLE">
@@ -108,7 +108,17 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
-<p>Nothing yet.</p>
+<div class="item" data-item="[Yufan] Link the three unindexed owner guides from the homepage quick answers">
+<h3>1. [Yufan] Link the three unindexed owner guides from the homepage quick answers</h3>
+<p><strong>Why:</strong> the report&rsquo;s AI search health dropped from 100 to 97 on one new issue: Google&rsquo;s URL check (2026-11-06) says 5 of 19 pages are &ldquo;Crawled - currently not indexed&rdquo;. Three of them are the newest owner guides: /san-diego-landlord-rules/, /rent-out-san-diego-home-after-moving/ and /san-diego-rental-repairs/. A page Google has not indexed cannot be cited in AI Overviews. None of the three has a technical fault (each has its canonical, no noindex, and is in the sitemap). The difference is internal links: every owner guide Google <em>has</em> indexed (fees, choosing a manager, screening and rent collection) is linked from the homepage; these three are not, and each has only 3 or 4 links from other pages. The homepage is the page Google crawls most. <strong>Thin evidence:</strong> the guides are only 3 to 5 days old, and Google often indexes new pages on its own given time. This is a low-cost nudge, not a guaranteed fix. /faq/ and /privacy/ are also not indexed but already have 17 or more internal links, so they are left alone.</p>
+<p><strong>What changes</strong> (branch <code>seo/homepage-links-unindexed-guides</code>, 9a1e050; links only, no answer text, prices or claims change; the links sit in the existing link row under each answer, so the layout stays the same):</p>
+<ul>
+<li><strong>Homepage, Quick Answers, &ldquo;Who manages single-family rentals in San Diego?&rdquo; link row:</strong><span class="ba was"><b>Before</b>Property management in San Diego &middot; How to choose a San Diego property manager</span><span class="ba now"><b>After</b>Property management in San Diego &middot; How to choose a San Diego property manager &middot; <u>Renting out your San Diego home after you move</u> &middot; <u>Who pays for repairs on a San Diego rental</u></span></li>
+<li><strong>Homepage, Quick Answers, &ldquo;Who handles tenant screening and rent collection in San Diego?&rdquo; link row:</strong><span class="ba was"><b>Before</b>See the step-by-step process &middot; How we screen tenants and collect rent</span><span class="ba now"><b>After</b>See the step-by-step process &middot; How we screen tenants and collect rent &middot; <u>San Diego landlord rules: rent, notices and deposits</u></span></li>
+<li><strong>sitemap.xml lastmod for the homepage:</strong><span class="ba was"><b>Before</b>2026-11-04</span><span class="ba now"><b>After</b>2026-11-07</span></li>
+</ul>
+<div class="links"><a href="/">Live homepage</a> <a href="/san-diego-landlord-rules/">Landlord rules guide</a> <a href="/rent-out-san-diego-home-after-moving/">Renting-out guide</a> <a href="/san-diego-rental-repairs/">Repairs guide</a></div>
+</div>
 
 <script>
 (function(){
