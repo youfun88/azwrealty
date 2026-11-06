@@ -30,8 +30,8 @@ Serves: residential owners across San Diego County (single-family homes, condos,
 ## Services
 - [Property Management](https://www.azwrealty.com/san-diego-property-management/): full-service management for 8% of collected monthly rent
 - [Marketing & Leasing](https://www.azwrealty.com/marketing-and-leasing/): professional photos, top rental websites, showings 7 days a week
-- [Tenant Screening & Leasing](https://www.azwrealty.com/tenant-screening-and-leasing/): income, credit, eviction, employment, criminal, lien, and rental reference checks
-- [Rent Collection](https://www.azwrealty.com/rent-collection/): online payments; owner draws by direct deposit by the 10th of each month; monthly cycle explained
+- [Tenant Screening & Leasing](https://www.azwrealty.com/tenant-screening-and-leasing/): income, credit, eviction, employment, criminal, lien, and rental reference checks; $65 credit and background check per applicant
+- [Rent Collection](https://www.azwrealty.com/rent-collection/): rent due by the 5th of each month, late charge of 10% of the amount still owed from the 6th; online payments; owner draws by direct deposit by the 10th of each month; monthly cycle explained
 - [Maintenance & Service](https://www.azwrealty.com/maintenance-service/): 24/7 emergency service, vetted vendors
 - [Accounting](https://www.azwrealty.com/accounting/): monthly and annual owner statements
 - [Pricing](https://www.azwrealty.com/pricing/)
