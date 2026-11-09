@@ -4,11 +4,13 @@
       [data-draft], .links) always stay visible. Text is tagged with lang="en" / lang="zh-Hant"; old mixed
       text ("中文 English") is split into the two spans at load.
    3. Items at 需要修改 collapse into 「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting items.
+   4. Type badge above each item's title, from data-type (new / update / section / setting / question) and,
+      for update / section, the page name in data-page (English) and data-page-zh (Chinese).
    Sends nothing; the page's own scripts do all network requests. */
 (function(){
   var D=document, H=D.documentElement;
   var HAN=/[㐀-鿿豈-﫿]/g, CJK=/[　-〿㐀-鿿豈-﫿＀-￯]/, CJKG=/[　-〿㐀-鿿豈-﫿＀-￯]/g;
-  var KEEP='.rv-gate,script,style,textarea,code,pre,.ba,.links,[data-draft],.rv-draft,details.draft-lang>:not(summary),.rv-langbar,.rv-row';
+  var KEEP='.rv-gate,script,style,textarea,code,pre,.ba,.links,[data-draft],.rv-draft,details.draft-lang>:not(summary),.rv-langbar,.rv-row,.rv-type';
   function q(s,r){return Array.prototype.slice.call((r||D).querySelectorAll(s));}
   function count(re,s){var m=s.match(re);return m?m.length:0;}
   function inKeep(n){var e=n.nodeType===1?n:n.parentElement;return !e||!!e.closest(KEEP);}
@@ -191,7 +193,7 @@
     var tt=D.createElement('span');tt.className='rv-t';
     if(t.en){tt.appendChild(span('zh-Hant',t.zh));tt.appendChild(span('en',t.en));}else tt.textContent=t.zh;
     var dt=D.createElement('span');dt.className='rv-date';
-    r.innerHTML='<span class="rv-dot" aria-hidden="true"></span>';r.appendChild(tt);r.appendChild(dt);
+    r.innerHTML='<span class="rv-dot" aria-hidden="true"></span>';var tb=typeEl(box,true);if(tb)r.appendChild(tb);r.appendChild(tt);r.appendChild(dt);
     r.addEventListener('click',function(){var c=box.classList.toggle('rv-collapsed');r.setAttribute('aria-expanded',String(!c));});
     box.insertBefore(r,box.firstChild);
   }
@@ -239,11 +241,42 @@
     });
   }
 
+  /* ---------- 4. Type badge ---------- */
+  var TYPES={'new':['新文章','New article'],'update':['更新現有頁面','Update to a page'],'section':['新增段落','New section'],
+    'setting':['網站設定','Site setting'],'question':['問題','Question']};
+  function typeKey(box){var t=(box.getAttribute('data-type')||'').trim().toLowerCase();
+    return TYPES[t]?t+'|'+(box.getAttribute('data-page')||'')+'|'+(box.getAttribute('data-page-zh')||''):'';}
+  function typeEl(box,short){
+    var t=(box.getAttribute('data-type')||'').trim().toLowerCase(),T=TYPES[t];if(!T)return null;
+    var en=(box.getAttribute('data-page')||'').trim(),zh=(box.getAttribute('data-page-zh')||'').trim()||en;if(!en)en=zh;
+    var named=!short&&(t==='update'||t==='section')&&en;
+    var e=D.createElement('span');e.className='rv-type rv-type-'+t;
+    e.appendChild(span('zh-Hant',T[0]+(named?'：'+zh:'')));
+    var p=D.createElement('span');p.className='rv-sep';p.textContent=' · ';e.appendChild(p);
+    e.appendChild(span('en',T[1]+(named?': '+en:'')));
+    return e;
+  }
+  function titleEl(box){var h=q('h3,h2,summary',box).filter(function(x){return !x.closest('.rv-row,.rv-received-note,.form')&&x.closest('.item')===box;})[0];return h||null;}
+  function badges(){
+    q('.item[data-type],.item[data-rv-type]').forEach(function(box){
+      var k=typeKey(box);if(box.getAttribute('data-rv-type')===k&&(!k||box.querySelector('.rv-type')))return;
+      box.setAttribute('data-rv-type',k);
+      q('.rv-type-line,.rv-row>.rv-type',box).forEach(function(n){n.remove();});
+      var b=typeEl(box);if(!b)return;
+      var line=D.createElement('div');line.className='rv-type-line';line.appendChild(b);
+      var h=titleEl(box);
+      if(h&&h.tagName!=='SUMMARY')h.parentNode.insertBefore(line,h);
+      else if(h)h.insertBefore(b,h.firstChild);
+      else{var r=box.querySelector(':scope>.rv-row');box.insertBefore(line,r?r.nextSibling:box.firstChild);}
+      var row=box.querySelector(':scope>.rv-row'),rb=typeEl(box,true);if(row&&rb)row.insertBefore(rb,row.querySelector('.rv-t'));
+    });
+  }
+
   /* ---------- run ---------- */
   diffAll();
   splitIn(D.body);tagSiblings(D.body);
   langBar();
-  makeSections();place();
+  badges();makeSections();place();
   var pending=[],busy=false;
   new MutationObserver(function(ms){
     ms.forEach(function(m){m.addedNodes.forEach(function(n){pending.push(n);});});
@@ -251,7 +284,7 @@
     Promise.resolve().then(function(){
       var list=pending;pending=[];
       list.forEach(function(n){if(n.isConnected){splitIn(n);if(n.nodeType===1)tagSiblings(n.parentNode||n);}});
-      place();busy=false;
+      badges();place();busy=false;
     });
-  }).observe(D.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-status']});
+  }).observe(D.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-status','data-type','data-page','data-page-zh']});
 })();

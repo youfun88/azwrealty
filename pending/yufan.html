@@ -112,9 +112,14 @@ document.querySelector('.tab-close').addEventListener('click',function(){
     when at changes, data-requested="YYYY-MM-DD" (the date changes were asked). Items at changes collapse into
     「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting ones, by themselves.
     After revising, set data-status back to "review" (and drop data-requested): the card returns to the top.
+  - Each item also carries data-type, shown as a badge above its title: new (新文章, a page that doesn't exist yet),
+    update (更新現有頁面, edits to a live page), section (新增段落, added to a live page), setting (網站設定: titles,
+    descriptions, schema, technical; every [Yufan] item), question (問題, the Questions box). For update and section, name
+    the page: data-page="English page name" data-page-zh="中文頁名". Example:
+    <div class="item" data-item="..." data-type="section" data-page="About" data-page-zh="關於我們" data-status="review">
 -->
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
-<div class="item" data-item="TITLE">
+<div class="item" data-item="TITLE" data-type="setting">
 <h3>1. TITLE</h3>
 <p>What changed and why.</p>
 <div class="links"><a href="/pending/..." target="_blank" rel="noopener">Preview</a><a href="/..." target="_blank" rel="noopener">Live version</a></div>

@@ -112,9 +112,14 @@ document.querySelector('.tab-close').addEventListener('click',function(){
     when at changes, data-requested="YYYY-MM-DD" (the date changes were asked). Items at changes collapse into
     「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting ones, by themselves.
     After revising, set data-status back to "review" (and drop data-requested): the card returns to the top.
+  - Each item also carries data-type, shown as a badge above its title: new (新文章, a page that doesn't exist yet),
+    update (更新現有頁面, edits to a live page), section (新增段落, added to a live page), setting (網站設定: titles,
+    descriptions, schema, technical; every [Yufan] item), question (問題, the Questions box). For update and section, name
+    the page: data-page="English page name" data-page-zh="中文頁名". Example:
+    <div class="item" data-item="..." data-type="section" data-page="About" data-page-zh="關於我們" data-status="review">
 -->
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
-<div class="item" data-item="TITLE">
+<div class="item" data-item="TITLE" data-type="new">
 <h3>1. TITLE</h3>
 <p>What changed and why.</p>
 <div class="links"><a href="/pending/..." target="_blank" rel="noopener">Preview</a><a href="/..." target="_blank" rel="noopener">Live version</a></div>
@@ -127,7 +132,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <summary>想修改網站嗎？ · Suggest a change</summary>
 <p>隨時都可以在這裡告訴我們想改什麼，例如文字、價格或新的內容。系統每 8 小時會處理一次：簡單的修改會直接更新，較大的內容會先放到這頁讓您確認。Tell us anything you'd like changed. It's handled every 8 hours: simple edits go live, and bigger content comes back here for your OK first.</p>
 </details>
-<div class="item" data-item="Small investors guide: property management for 1-5 San Diego rentals" data-status="review">
+<div class="item" data-item="Small investors guide: property management for 1-5 San Diego rentals" data-type="new" data-status="review">
 <h3>1. Small investors guide: property management for 1-5 San Diego rentals</h3>
 <p><strong>What changes:</strong> a new owner guide for investors with one to five rentals. It answers &ldquo;How should a small investor choose a San Diego property manager?&rdquo; and covers: how your 8% fee works per unit (with a three-unit example: $2,000, $2,500 and $3,000 rents come to $620 a month), Full-Service Management versus Tenant Placement Only, the California and San Diego rules small landlords meet most (all taken from your already-published, sourced landlord rules guide), a question table with your written answers, and an FAQ. It has a header photo, breadcrumbs and search-engine data.</p>
 <p><strong>Why:</strong> Yufan asked for this article. &ldquo;What are the best property managers in San Diego for small investors with one to five rental units?&rdquo; is a question owners ask AI assistants, and they did not name Azure Waves. The search &ldquo;best property management company in san diego&rdquo; gets about 140 searches a month.</p>
@@ -135,7 +140,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <div class="links"><a href="/pending/san-diego-property-management-small-investors/" target="_blank" rel="noopener">Preview</a></div>
 </div>
 
-<div class="item" data-item="Condo guide: managing a San Diego condo from out of state" data-status="review">
+<div class="item" data-item="Condo guide: managing a San Diego condo from out of state" data-type="new" data-status="review">
 <h3>2. Condo guide: managing a San Diego condo from out of state</h3>
 <p><strong>What changes:</strong> a new owner guide for condo owners who move away. It answers &ldquo;Who can manage my San Diego condo if I move out of state?&rdquo; and covers: what to check in the HOA documents (leasing rules, move-in rules, repairs, dues), the condo exemption from the state rent cap (same sourced wording as your landlord rules guide), what you handle for an owner who lives elsewhere, how they get paid and stay informed, the cost (example: $2,800 rent, $224 a month), and a short to-do list before moving. It links to your existing guide on renting out a home after you move. It does not repeat the tax section you asked us to remove.</p>
 <p><strong>Why:</strong> Yufan asked for this article. &ldquo;I&rsquo;m moving out of state and want to rent out my San Diego condo, who can manage it for me?&rdquo; is a question owners ask AI assistants, and they did not name Azure Waves. &ldquo;rental property management in san diego&rdquo; gets about 260 searches a month.</p>
@@ -143,7 +148,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <div class="links"><a href="/pending/manage-san-diego-condo-from-out-of-state/" target="_blank" rel="noopener">Preview</a></div>
 </div>
 
-<div class="item" data-item="Chinese guide: finding a San Diego property management company" data-status="review">
+<div class="item" data-item="Chinese guide: finding a San Diego property management company" data-type="new" data-status="review">
 <h3>3. Chinese guide: finding a San Diego property management company</h3>
 <p><strong>What changes:</strong> the site&rsquo;s first page in Chinese (Traditional characters). It answers &ldquo;聖地牙哥出租房子，可以找哪家物業管理公司？&rdquo; (Which property management company can I use to rent out my home in San Diego?). It covers the six things to compare, with your answers, your fees, how to check a license at the DRE, self-managing or hiring a manager, and what you do for owners who live elsewhere. The menu, footer and forms stay in English. It would go live at /zh/san-diego-property-management-guide/.</p>
 <p><strong>Why:</strong> Yufan asked for this article. Owners ask AI assistants this question in Chinese, and they did not name Azure Waves. The related search &ldquo;property management companies in san diego california&rdquo; gets about 1,300 searches a month. The site has no Chinese page yet.</p>
@@ -164,7 +169,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <li>Can your team serve owners in Mandarin or another Chinese language? If yes, we will say so on the new Chinese guide (draft 3). If not, the page stays as it is.</li>
 <li>For condos, do you pay the owner&rsquo;s HOA dues from the rent, and do you handle communication with the HOA? The condo guide (draft 2) now only tells owners to plan how dues will be paid.</li>
 </ol>
-<div class="item" data-item="Questions">
+<div class="item" data-item="Questions" data-type="question">
 <h3>Answers to the questions</h3>
 <p>You can answer by number.</p>
 </div>

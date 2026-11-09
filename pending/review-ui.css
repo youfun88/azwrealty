@@ -36,3 +36,14 @@ html.rv-lang-en .rv-sep,html.rv-lang-zh .rv-sep{display:none!important}
 .item:not(.rv-collapsed)>.rv-row{padding:0 0 10px;margin:0 0 10px;border-bottom:1px solid #e4e1db;background:none}
 .rv-empty{display:none!important}
 @media (max-width:600px){.rv-row{flex-wrap:wrap}.rv-row .rv-date{order:3;width:100%;padding-left:19px}}
+/* 4. Type badge above each title (data-type) */
+.rv-type-line{margin:0 0 6px;line-height:1}
+.rv-type{display:inline-flex;align-items:center;max-width:100%;padding:4px 10px;border-radius:999px;border:1px solid currentColor;background:#fff;font-size:12.5px;font-weight:700;line-height:1.3;letter-spacing:0;text-transform:none;white-space:normal;vertical-align:middle}
+.rv-type-new{color:#1d4f91;background:#eef4fc}
+.rv-type-update{color:#92400e;background:#fdf5e6}
+.rv-type-section{color:#6b21a8;background:#f6effc}
+.rv-type-setting{color:#3a3f47;background:#f1efea}
+.rv-type-question{color:#0f766e;background:#ecf8f6}
+summary>.rv-type{margin-right:8px}
+.rv-row>.rv-type{flex:none;padding:2px 8px;font-size:12px;font-weight:600}
+@media (max-width:600px){.rv-row>.rv-type{order:0}}
