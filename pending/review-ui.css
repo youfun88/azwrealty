@@ -14,18 +14,21 @@ html.rv-lang-en .rv-sep,html.rv-lang-zh .rv-sep{display:none!important}
 .rv-lang button:hover{background:#f1efea}
 .rv-lang button[aria-pressed="true"]{background:#1b1e23;color:#fff}
 .rv-lang button:focus-visible{outline:2px solid #1d4f91;outline-offset:2px}
-/* 3. Approved, waiting to go live */
-.rv-approved{margin:40px 0 0}
-.rv-approved-h{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#166534}
-.rv-approved-h .rv-n{font-weight:600;color:#5d646e}
-.rv-approved-intro{margin:0 0 10px;font-size:14px;color:#5d646e}
-.rv-approved-list>.item{margin:8px 0}
+/* 3. Changes requested, in progress / Approved, waiting to go live */
+.rv-group{margin:40px 0 0}
+.rv-group+.rv-group{margin-top:32px}
+.rv-group-h{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#166534}
+.rv-changes .rv-group-h{color:#991b1b}
+.rv-group-h .rv-n{font-weight:600;color:#5d646e}
+.rv-group-intro{margin:0 0 10px;font-size:14px;color:#5d646e}
+.rv-list>.item{margin:8px 0}
 .item.rv-collapsed{padding:0!important;overflow:hidden}
 .item.rv-collapsed>:not(.rv-row){display:none!important}
 .rv-row{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;margin:0;padding:10px 16px;border:0;background:none;color:inherit;font:inherit;font-size:15px;line-height:1.4;text-align:left;cursor:pointer}
 .rv-row:hover{background:#f7f6f3}
 .rv-row:focus-visible{outline:2px solid #1d4f91;outline-offset:-2px}
-.rv-ok-dot{flex:none;width:9px;height:9px;border-radius:50%;background:#15803d}
+.rv-dot{flex:none;width:9px;height:9px;border-radius:50%;background:#15803d}
+.rv-is-changes .rv-dot{background:#b91c1c}
 .rv-row .rv-t{flex:1;min-width:0;font-weight:600}
 .rv-row .rv-date{flex:none;font-size:13px;color:#5d646e;white-space:nowrap}
 .rv-row::after{content:"";flex:none;width:7px;height:7px;margin:0 4px 3px 4px;border-right:2px solid #8a919a;border-bottom:2px solid #8a919a;transform:rotate(45deg)}

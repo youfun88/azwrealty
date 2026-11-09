@@ -3,7 +3,7 @@
    2. EN / 中文 switch: shows one language of the explanations and labels. Drafts (.ba, details.draft-lang,
       [data-draft], .links) always stay visible. Text is tagged with lang="en" / lang="zh-Hant"; old mixed
       text ("中文 English") is split into the two spans at load.
-   3. Approved items collapse into 「已同意，等待上線」 below the waiting items.
+   3. Items at 需要修改 collapse into 「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting items.
    Sends nothing; the page's own scripts do all network requests. */
 (function(){
   var D=document, H=D.documentElement;
@@ -137,7 +137,18 @@
     labels();setLang(pickLang(),false);
   }
 
-  /* ---------- 3. Approved section ---------- */
+  /* ---------- 3. Changes-requested and approved sections ---------- */
+  /* Order on the page: waiting items stay where they are, then 「需要修改，處理中」, then 「已同意，等待上線」.
+     Items in the two lower sections collapse to one row; a click opens the full card. */
+  var G={
+    changes:{zh:'需要修改，處理中',en:'Changes requested, in progress',
+      izh:'我們會依您的意見修改，改好後會回到上方等您審閱。',ien:'We\'ll revise it and bring it back up here for your review.',
+      dzh:'需要修改 ',den:'Requested '},
+    approved:{zh:'已同意，等待上線',en:'Approved, waiting to go live',
+      izh:'這些已經同意，下次更新時上線。點一下可以展開，仍然可以留言或按「需要修改」。',ien:'These are approved and go live at the next update. Click one to open it; you can still comment or request changes.',
+      dzh:'已同意 ',den:'Approved '}
+  };
+  var KINDS=['changes','approved'],groups={};
   function regular(box){var i=box.getAttribute('data-item');return i&&i!=='Suggestions'&&i!=='Questions'&&!box.classList.contains('suggest');}
   D.addEventListener('click',function(e){
     var b=e.target.closest&&e.target.closest('.item .btns button[data-d]');
@@ -150,23 +161,25 @@
     var ok=box.querySelector('.form .status.ok'),sent=box.getAttribute('data-rv-sent');
     if(ok&&sent)return sent==='approve'?'approved':'changes';
     if(box.getAttribute('data-rv-undo'))return 'review';
-    return box.getAttribute('data-status')||'review';
+    var s=box.getAttribute('data-status');return s==='approved'||s==='changes'?s:'review';
   }
   function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
-  function approvedDate(box){
-    var n=box.querySelector('.rv-received-note strong'),m=n&&n.textContent.match(/已同意（([^）]+)）/);
-    if(m)return m[1];if(box.getAttribute('data-approved'))return box.getAttribute('data-approved');
-    if(box.querySelector('.form .status.ok'))return today();return '';
+  function dateOf(box,s){
+    if(box.querySelector('.form .status.ok')&&box.getAttribute('data-rv-sent'))return today();
+    var n=box.querySelector('.rv-received-note strong'),t=n?n.textContent:'',m=s==='approved'?t.match(/已同意（([^）]+)）/):t.match(/已收到您\s*(\d{4}-\d\d-\d\d)/);
+    if(m)return m[1];
+    return box.getAttribute(s==='approved'?'data-approved':'data-requested')||'';
   }
-  var sec=null,secList=null,secCount=null;
-  function makeSection(){
+  function makeSections(){
     var items=q('.item').filter(regular);if(!items.length)return;
-    var last=items[items.length-1];
-    sec=D.createElement('section');sec.className='rv-approved';sec.hidden=true;sec.setAttribute('aria-labelledby','rvApH');
-    sec.innerHTML='<h2 class="rv-approved-h" id="rvApH"><span lang="zh-Hant">已同意，等待上線</span><span class="rv-sep"> · </span><span lang="en">Approved, waiting to go live</span> <span class="rv-n"></span></h2>'+
-      '<p class="rv-approved-intro"><span lang="zh-Hant">這些已經同意，下次更新時上線。點一下可以展開，仍然可以留言或按「需要修改」。</span><span class="rv-sep"> </span><span lang="en">These are approved and go live at the next update. Click one to open it; you can still comment or request changes.</span></p><div class="rv-approved-list"></div>';
-    last.parentNode.insertBefore(sec,last.nextSibling);
-    secList=sec.querySelector('.rv-approved-list');secCount=sec.querySelector('.rv-n');
+    var at=items[items.length-1];
+    KINDS.forEach(function(k){
+      var g=G[k],s=D.createElement('section');s.className='rv-group rv-'+k;s.hidden=true;s.setAttribute('aria-labelledby','rvH-'+k);
+      s.innerHTML='<h2 class="rv-group-h" id="rvH-'+k+'"><span lang="zh-Hant">'+g.zh+'</span><span class="rv-sep"> · </span><span lang="en">'+g.en+'</span> <span class="rv-n"></span></h2>'+
+        '<p class="rv-group-intro"><span lang="zh-Hant">'+g.izh+'</span><span class="rv-sep"> </span><span lang="en">'+g.ien+'</span></p><div class="rv-list"></div>';
+      at.parentNode.insertBefore(s,at.nextSibling);at=s;
+      groups[k]={sec:s,list:s.querySelector('.rv-list'),n:s.querySelector('.rv-n')};
+    });
   }
   function titleOf(box){
     var h=box.querySelector('h3,h2,summary'),en=box.querySelector('.en-title');
@@ -178,40 +191,47 @@
     var tt=D.createElement('span');tt.className='rv-t';
     if(t.en){tt.appendChild(span('zh-Hant',t.zh));tt.appendChild(span('en',t.en));}else tt.textContent=t.zh;
     var dt=D.createElement('span');dt.className='rv-date';
-    r.innerHTML='<span class="rv-ok-dot" aria-hidden="true"></span>';r.appendChild(tt);r.appendChild(dt);
+    r.innerHTML='<span class="rv-dot" aria-hidden="true"></span>';r.appendChild(tt);r.appendChild(dt);
     r.addEventListener('click',function(){var c=box.classList.toggle('rv-collapsed');r.setAttribute('aria-expanded',String(!c));});
     box.insertBefore(r,box.firstChild);
   }
-  function rowDate(box){
-    var r=box.querySelector(':scope>.rv-row .rv-date');if(!r)return;var d=approvedDate(box);
-    var txt=d?'已同意 '+d+' · Approved '+d:'';
-    if(r.getAttribute('data-t')===txt)return;r.setAttribute('data-t',txt);r.textContent='';
-    if(d){r.appendChild(span('zh-Hant','已同意 '+d));r.appendChild(span('en','Approved '+d));}
+  function rowDate(box,s){
+    var r=box.querySelector(':scope>.rv-row .rv-date');if(!r)return;var d=dateOf(box,s),g=G[s],key=s+'|'+d;
+    if(r.getAttribute('data-t')===key)return;r.setAttribute('data-t',key);r.textContent='';
+    if(d){r.appendChild(span('zh-Hant',g.dzh+d));var p=D.createElement('span');p.className='rv-sep';p.textContent=' · ';r.appendChild(p);r.appendChild(span('en',g.den+d));}
   }
+  function inGroup(box){return KINDS.some(function(k){return box.parentNode===groups[k].list;});}
   function place(){
-    if(!sec)return;var n=0;
+    if(!groups.approved)return;var c={changes:0,approved:0};
     q('.item').filter(regular).forEach(function(box){
+      /* a reply sent now replaces the one shown from before (the board keeps only the latest), so drop the old note */
+      if(box.querySelector('.form .status.ok')&&box.getAttribute('data-rv-sent'))q('.rv-received-note',box).forEach(function(n){n.remove();});
       var s=state(box);
-      if(s==='approved'){
-        n++;
-        if(box.parentNode!==secList){
+      /* a cancelled reply puts the item back to review on the board too; keep data-status (and the page's count chips) in step */
+      if(s==='review'&&box.getAttribute('data-rv-undo')&&box.hasAttribute('data-status')&&box.getAttribute('data-status')!=='review'){
+        box.setAttribute('data-status','review');box.classList.add('rv-undone');
+      }
+      if(groups[s]){
+        c[s]++;var g=groups[s];
+        if(box.parentNode!==g.list){
           if(!box._rvSlot){box._rvSlot=D.createComment('rv-slot');box.parentNode.insertBefore(box._rvSlot,box);}
           if(!box.querySelector(':scope>.rv-row'))addRow(box);
-          box.classList.add('rv-collapsed','rv-is-approved');box.querySelector(':scope>.rv-row').setAttribute('aria-expanded','false');
-          secList.appendChild(box);
+          box.classList.add('rv-collapsed');box.querySelector(':scope>.rv-row').setAttribute('aria-expanded','false');
+          g.list.appendChild(box);
         }
-        rowDate(box);
-      }else if(box.parentNode===secList){
-        box.classList.remove('rv-collapsed','rv-is-approved');
+        box.classList.toggle('rv-is-approved',s==='approved');box.classList.toggle('rv-is-changes',s==='changes');
+        rowDate(box,s);
+      }else if(inGroup(box)){
+        box.classList.remove('rv-collapsed','rv-is-approved','rv-is-changes');
         var row=box.querySelector(':scope>.rv-row');if(row)row.remove();
         box._rvSlot.parentNode.insertBefore(box,box._rvSlot);
       }
     });
-    sec.hidden=!n;var v='('+n+')';if(secCount.textContent!==v)secCount.textContent=v;
+    KINDS.forEach(function(k){var g=groups[k];g.sec.hidden=!c[k];var v='('+c[k]+')';if(g.n.textContent!==v)g.n.textContent=v;});
     /* hide a section heading whose items have all moved down */
     q('h2').forEach(function(h){
-      if(h.closest('.rv-approved,.rv-gate'))return;var had=false,has=false,ex=[];
-      for(var e=h.nextSibling;e&&!(e.nodeType===1&&(e.tagName==='H2'||e===sec));e=e.nextSibling){
+      if(h.closest('.rv-group,.rv-gate'))return;var had=false,has=false,ex=[];
+      for(var e=h.nextSibling;e&&!(e.nodeType===1&&(e.tagName==='H2'||e.classList.contains('rv-group')));e=e.nextSibling){
         if(e.nodeType===8&&e.nodeValue==='rv-slot')had=true;
         else if(e.nodeType===1){if(e.matches('.item'))has=true;else if(e.matches('.section-intro'))ex.push(e);}
       }
@@ -223,7 +243,7 @@
   diffAll();
   splitIn(D.body);tagSiblings(D.body);
   langBar();
-  makeSection();place();
+  makeSections();place();
   var pending=[],busy=false;
   new MutationObserver(function(ms){
     ms.forEach(function(m){m.addedNodes.forEach(function(n){pending.push(n);});});

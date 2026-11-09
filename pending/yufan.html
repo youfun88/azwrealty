@@ -108,8 +108,10 @@ document.querySelector('.tab-close').addEventListener('click',function(){
     Never mix both languages in one text. Drafts (.ba boxes, details.draft-lang, [data-draft], .links) are not tagged: both stay visible.
   - Before/after: <span class="ba was"><b>Before</b>old</span><span class="ba now"><b>After</b>new</span>, plain text only.
     The script highlights the changed words itself; don't hand-mark them.
-  - Each item carries data-status="<board stage>" (review / changes / approved) and, when approved, data-approved="YYYY-MM-DD".
-    Approved items collapse into 「已同意，等待上線」 by themselves.
+  - Each item carries data-status="<board stage>" (review / changes / approved); when approved, data-approved="YYYY-MM-DD";
+    when at changes, data-requested="YYYY-MM-DD" (the date changes were asked). Items at changes collapse into
+    「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting ones, by themselves.
+    After revising, set data-status back to "review" (and drop data-requested): the card returns to the top.
 -->
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
 <div class="item" data-item="TITLE">
