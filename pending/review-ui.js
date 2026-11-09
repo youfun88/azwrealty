@@ -2,7 +2,7 @@
    1. Highlights what changed in each BEFORE / AFTER pair (.ba.was + .ba.now) with <mark class="rv-d">.
    2. EN / 中文 switch: shows one language of the explanations and labels. Drafts (.ba, details.draft-lang,
       [data-draft], .links) always stay visible. Text is tagged with lang="en" / lang="zh-Hant"; old mixed
-      text ("中文 English") is split into the two spans at load.
+      text ("中文 English") is split into the two spans at load, only where a Chinese run meets an English run.
    3. Items at 需要修改 collapse into 「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting items.
    4. Type badge above each item's title, from data-type (new / update / section / setting / question) and,
       for update / section, the page name in data-page (English) and data-page-zh (Chinese).
@@ -60,16 +60,29 @@
   /* ---------- 2. Language ---------- */
   var DICT={'您的名字 / Your name（選填 optional）':['您的名字（選填）',' / ','Your name (optional)']};
   function isBoundary(s,i){var k=i-1;while(k>=0&&/[…)）」』”"!！?？.。，,:：]/.test(s[k])&&!CJK.test(s[k]))k--;return k>=0&&CJK.test(s[k]);}
+  /* Old mixed text is cut only at a clear language boundary: a Chinese run, then an English run. Quoted terms
+     ("…", “…”, 「…」) don't count toward either side. Anything less clear stays whole and shows in both modes. */
+  var WORD=/[A-Za-z0-9][A-Za-z0-9'’\-]*(?:\.[A-Za-z0-9]+)*/g, END=/[。！？!?]+|\.(?=\s|$)/;
+  function unquote(s,all){s=s.replace(/"[^"]*"|“[^”]*”/g,' ');return all?s.replace(/「[^」]*」|『[^』]*』/g,' '):s;}
+  function parts(s,re){return s.split(re).filter(function(x){return /[A-Za-z0-9㐀-鿿豈-﫿]/.test(x);});}
+  function zhLike(s){s=unquote(s);return count(HAN,s)>=Math.max(1,count(WORD,s));}       /* at least as many Han characters as English words */
+  function enLike(s){s=unquote(s,true);var w=count(WORD,s);return w>=1&&count(HAN,s)*3<=w;}
   function splitText(s){
     var t=s.trim();if(DICT[t]){var d=DICT[t],lead=s.slice(0,s.indexOf(t)),tail=s.slice(s.indexOf(t)+t.length);return [lead+d[0],d[1],d[2]+tail];}
     if(!count(HAN,s)||!/[A-Za-z]{2}/.test(s))return null;
-    for(var pass=0;pass<2;pass++)for(var i=1;i<s.length;i++){
+    for(var i=1;i<s.length;i++){
       if(!isBoundary(s,i))continue;
       var rest=s.slice(i),sep=rest.match(/^[\s·•|\/\-–—:：]*/)[0],en=rest.slice(sep.length);
-      if(!/^[A-Za-z0-9"“'‘(\[$]/.test(en)||count(/[A-Za-z]/g,en)<4)continue;
-      var cj=count(CJKG,en);
-      if(pass===0?cj>0:(cj/en.length>0.1||en.split(/\s+/).length<6||!/^["“A-Z]/.test(en)))continue;
-      var zh=s.slice(0,i);if(!count(HAN,zh))continue;
+      /* a lowercase start means the English sentence began before the cut */
+      if(!/^[A-Z0-9"“'‘(\[$]/.test(en)||count(/[A-Za-z]/g,en)<4)continue;
+      var zh=s.slice(0,i),zt=zh.trim(),zs=parts(zh,END),es=parts(en,END);
+      /* the cut follows sentence or clause punctuation, or a short label ("需要修改 Request changes") */
+      if(!/[。！？!?，,；;：:）)」』]$/.test(zt)&&(zt.length>16||END.test(zt)))continue;
+      /* every sentence before the cut, and its last clause, reads as Chinese */
+      if(!zs.length||!zs.every(zhLike)||!zhLike(parts(zh,/[，,、；;：:（(]/).pop()||''))continue;
+      /* the first English sentence has no Chinese outside quotes, the rest is mostly English, and no Chinese punctuation
+         (「CC BY-SA 2.0。」 ends a Chinese sentence) */
+      if(!es.length||count(CJKG,unquote(es[0],true))||!enLike(es[0])||!enLike(en)||/[　-〿＀-￯]/.test(unquote(en,true)))continue;
       return [zh,sep,en];
     }
     return null;
