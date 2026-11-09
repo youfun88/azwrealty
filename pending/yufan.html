@@ -24,6 +24,7 @@ ol.q li{margin:0 0 12px}
 .ba.now{color:#166534;background:#f0fdf4;border-color:#166534}
 .ba code{color:inherit;background:none}
 </style>
+<link rel="stylesheet" href="/pending/review-ui.css">
 </head>
 <body>
 <!-- review-gate: Google sign-in (checked by admin.shiptolive.com/api/review/check; approvals are checked again there) -->
@@ -100,6 +101,16 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 <p>Search and AI-visibility changes for Yufan to approve: titles, descriptions, schema, internal links, llms.txt, sitemap, keywords. Content changes go to the owner at <a href="/pending/">/pending</a>. Not linked from the site and not indexed. The GX10 job applies approved changes at its next run (every 8 hours).</p>
 <p class="updated">Updated 2026-11-07.</p>
 
+<!-- review-ui (/pending/review-ui.js + .css, shared by /pending and /pending/yufan):
+  - Language: an EN / 中文 switch shows one language. Write every explanation, note, label and question twice, each in
+    its own element: lang="zh-Hant" for Chinese, lang="en" for English, e.g. <p lang="zh-Hant">中文說明</p><p lang="en">English note</p>
+    or <strong lang="zh-Hant">改了什麼：</strong><span lang="zh-Hant">…</span> <strong lang="en">What changed:</strong> <span lang="en">…</span>.
+    Never mix both languages in one text. Drafts (.ba boxes, details.draft-lang, [data-draft], .links) are not tagged: both stay visible.
+  - Before/after: <span class="ba was"><b>Before</b>old</span><span class="ba now"><b>After</b>new</span>, plain text only.
+    The script highlights the changed words itself; don't hand-mark them.
+  - Each item carries data-status="<board stage>" (review / changes / approved) and, when approved, data-approved="YYYY-MM-DD".
+    Approved items collapse into 「已同意，等待上線」 by themselves.
+-->
 <!-- Item markup (copy for each draft; data-item must equal the board title exactly):
 <div class="item" data-item="TITLE">
 <h3>1. TITLE</h3>
@@ -209,4 +220,5 @@ document.querySelector('.tab-close').addEventListener('click',function(){
   scan();
 })();
 </script>
+<script src="/pending/review-ui.js"></script>
 </body></html>
