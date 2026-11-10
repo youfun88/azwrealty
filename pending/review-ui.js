@@ -6,11 +6,15 @@
    3. Items at 需要修改 collapse into 「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting items.
    4. Type badge above each item's title, from data-type (new / update / section / setting / question) and,
       for update / section, the page name in data-page (English) and data-page-zh (Chinese).
+   5. Cards with 2+ BEFORE / AFTER pairs: each pair is numbered (第 1 處 / Change 1) and gets a keep / skip toggle.
+      Approve stays the one final button; its label shows the count when something is skipped, and it is disabled
+      when every pair is skipped. On approve, "[部分同意] 同意：1, 2；不要：3" is added to the comment the page sends.
+      A pair is the element marked data-pair="N" (the card template), else the .ba.was + .ba.now found in the card.
    Sends nothing; the page's own scripts do all network requests. */
 (function(){
   var D=document, H=D.documentElement;
   var HAN=/[㐀-鿿豈-﫿]/g, CJK=/[　-〿㐀-鿿豈-﫿＀-￯]/, CJKG=/[　-〿㐀-鿿豈-﫿＀-￯]/g;
-  var KEEP='.rv-gate,script,style,textarea,code,pre,.ba,.links,[data-draft],.rv-draft,details.draft-lang>:not(summary),.rv-langbar,.rv-row,.rv-type';
+  var KEEP='.rv-gate,script,style,textarea,code,pre,.ba,.links,[data-draft],.rv-draft,details.draft-lang>:not(summary),.rv-langbar,.rv-row,.rv-type,.rv-pnum,.rv-pairbar,.rv-allskip';
   function q(s,r){return Array.prototype.slice.call((r||D).querySelectorAll(s));}
   function count(re,s){var m=s.match(re);return m?m.length:0;}
   function inKeep(n){var e=n.nodeType===1?n:n.parentElement;return !e||!!e.closest(KEEP);}
@@ -285,11 +289,82 @@
     });
   }
 
+  /* ---------- 5. Approve each change separately ---------- */
+  function bi(zh,en){return '<span lang="zh-Hant">'+zh+'</span><span class="rv-sep"> / </span><span lang="en">'+en+'</span>';}
+  function pairsOf(box){
+    var marked=q('[data-pair]',box).filter(function(e){return e.closest('.item')===box&&e.querySelector('.ba.now');});
+    if(marked.length)return marked;
+    return q('.ba.was',box).filter(function(w){return w.closest('.item')===box&&w.nextElementSibling&&w.nextElementSibling.matches('.ba.now');})
+      .map(function(w){
+        var p=w.parentElement;
+        if(p!==box&&!p.matches('.item,.card-head')&&p.querySelectorAll('.ba.was').length===1)return p;
+        var now=w.nextElementSibling,s=D.createElement('div');s.className='rv-pair-wrap';p.insertBefore(s,w);s.appendChild(w);s.appendChild(now);return s;
+      });
+  }
+  function approveBtn(box){return box.querySelector('.form button[data-d="approve"]');}
+  function skipped(box){return q('.rv-pair',box).filter(function(u){return u.classList.contains('rv-skip');}).map(function(u){return +u.getAttribute('data-rv-n');});}
+  function partialLine(box){
+    var all=q('.rv-pair',box).map(function(u){return +u.getAttribute('data-rv-n');}),no=skipped(box);if(!no.length)return '';
+    return '[部分同意] 同意：'+all.filter(function(n){return no.indexOf(n)<0;}).join(', ')+'；不要：'+no.join(', ');
+  }
+  function setSkip(u,on){
+    u.classList.toggle('rv-skip',on);
+    q('.rv-pairbar button',u).forEach(function(b){b.setAttribute('aria-pressed',String((b.getAttribute('data-k')==='skip')===on));});
+  }
+  function syncApprove(box){
+    var b=approveBtn(box);if(!b||!box._rvPairs)return;
+    var n=box._rvPairs,no=skipped(box).length,key=no+'/'+n;
+    if(b._rvOrig==null)b._rvOrig=b.innerHTML;
+    if(b.getAttribute('data-rv-k')!==key){
+      b.setAttribute('data-rv-k',key);
+      b.innerHTML=no&&no<n?'<span lang="zh-Hant">同意上線（'+n+' 處中 '+(n-no)+' 處）</span><span class="rv-sep"> </span><span lang="en">Approve ('+(n-no)+' of '+n+' changes)</span>':b._rvOrig;
+    }
+    var all=no===n,hint=box.querySelector('.form .rv-allskip');
+    if(all&&!b.disabled)b.disabled=true;
+    if(!all&&b.hasAttribute('data-rv-off')&&b.disabled)b.disabled=false;
+    if(all)b.setAttribute('data-rv-off','1');else b.removeAttribute('data-rv-off');
+    if(all&&!hint){hint=D.createElement('p');hint.className='rv-allskip';
+      hint.innerHTML='<span lang="zh-Hant">每一處都選了「不要」，所以不能按同意。如果都不要，請按「需要修改」，並寫下您想要的說法。</span><span class="rv-sep"> </span><span lang="en">Every change is skipped, so Approve is off. To turn them all down, use Request changes and say what you would like instead.</span>';
+      var btns=box.querySelector('.form .btns');btns.parentNode.insertBefore(hint,btns.nextSibling);}
+    else if(!all&&hint)hint.remove();
+  }
+  function pairs(){
+    q('.item').filter(regular).forEach(function(box){
+      if(box._rvPairs===undefined){
+        var units=pairsOf(box);box._rvPairs=units.length>=2?units.length:0;
+        if(!box._rvPairs)return;
+        units.forEach(function(u,i){
+          var n=+u.getAttribute('data-pair')||i+1;u.classList.add('rv-pair');u.setAttribute('data-rv-n',n);
+          var num=D.createElement('span');num.className='rv-pnum';num.innerHTML=bi('第 '+n+' 處','Change '+n);u.insertBefore(num,u.firstChild);
+          var bar=D.createElement('div');bar.className='rv-pairbar';bar.setAttribute('role','group');bar.setAttribute('aria-label','第 '+n+' 處 Change '+n);
+          bar.innerHTML='<button type="button" data-k="keep" aria-pressed="true">'+bi('✓ 同意這處','Keep this change')+'</button>'+
+            '<button type="button" data-k="skip" aria-pressed="false">'+bi('✕ 不要這處','Skip this change')+'</button>';
+          var nows=q('.ba.now',u),now=nows[nows.length-1];now.parentNode.insertBefore(bar,now.nextSibling);
+          q('button',bar).forEach(function(b){b.addEventListener('click',function(){box._rvTouched=true;setSkip(u,b.getAttribute('data-k')==='skip');syncApprove(box);});});
+        });
+      }
+      if(!box._rvPairs)return;
+      /* a partial approval sent earlier: show the same choices again */
+      if(!box._rvTouched){var note=box.querySelector('.rv-received-note'),m=note&&note.textContent.match(/\[部分同意\][^\n]*?不要：\s*([\d,\s]+)/);
+        if(m&&note._rvSeen!==m[1]){note._rvSeen=m[1];var no=m[1].split(/[,\s]+/).filter(Boolean).map(Number);q('.rv-pair',box).forEach(function(u){setSkip(u,no.indexOf(+u.getAttribute('data-rv-n'))>=0);});}}
+      syncApprove(box);
+    });
+  }
+  /* runs before the page's own click handler, which reads the comment box when the button is pressed */
+  D.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.item .form button[data-d="approve"]');if(!b)return;
+    var box=b.closest('.item');if(!box||!box._rvPairs)return;
+    if(skipped(box).length===box._rvPairs){e.preventDefault();e.stopImmediatePropagation();return;}
+    var line=partialLine(box),ta=box.querySelector('.form textarea');if(!line||!ta)return;
+    var orig=ta.value;ta.value=orig.trim()?orig.replace(/\s+$/,'')+'\n'+line:line;
+    setTimeout(function(){if(ta.value.indexOf(line)>=0)ta.value=orig;},0);
+  },true);
+
   /* ---------- run ---------- */
   diffAll();
   splitIn(D.body);tagSiblings(D.body);
   langBar();
-  badges();makeSections();place();
+  badges();makeSections();place();pairs();
   var pending=[],busy=false;
   new MutationObserver(function(ms){
     ms.forEach(function(m){m.addedNodes.forEach(function(n){pending.push(n);});});
@@ -297,7 +372,7 @@
     Promise.resolve().then(function(){
       var list=pending;pending=[];
       list.forEach(function(n){if(n.isConnected){splitIn(n);if(n.nodeType===1)tagSiblings(n.parentNode||n);}});
-      badges();place();busy=false;
+      badges();place();pairs();busy=false;
     });
-  }).observe(D.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-status','data-type','data-page','data-page-zh']});
+  }).observe(D.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-status','data-type','data-page','data-page-zh','disabled']});
 })();

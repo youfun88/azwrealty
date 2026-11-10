@@ -108,6 +108,10 @@ document.querySelector('.tab-close').addEventListener('click',function(){
     Never mix both languages in one text. Drafts (.ba boxes, details.draft-lang, [data-draft], .links) are not tagged: both stay visible.
   - Before/after: <span class="ba was"><b>Before</b>old</span><span class="ba now"><b>After</b>new</span>, plain text only.
     The script highlights the changed words itself; don't hand-mark them.
+  - Several before/after pairs in one item: wrap each pair in its own element marked data-pair="1", "2", … in page order, e.g.
+    <li data-pair="1"><strong lang="zh-Hant">位置：</strong><strong lang="en">Where:</strong><span class="ba was">…</span><span class="ba now">…</span></li>.
+    The script numbers them (第 1 處 / Change 1) and gives each a keep / skip toggle. Approve stays the one final button; when
+    something is skipped the comment sent ends with "[部分同意] 同意：1, 2；不要：3". Publish only the kept pairs (COMMON.md step 3).
   - Each item carries data-status="<board stage>" (review / changes / approved); when approved, data-approved="YYYY-MM-DD";
     when at changes, data-requested="YYYY-MM-DD" (the date changes were asked). Items at changes collapse into
     「需要修改，處理中」 and approved items into 「已同意，等待上線」, below the waiting ones, by themselves.

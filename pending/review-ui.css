@@ -47,3 +47,17 @@ html.rv-lang-en .rv-sep,html.rv-lang-zh .rv-sep{display:none!important}
 summary>.rv-type{margin-right:8px}
 .rv-row>.rv-type{flex:none;padding:2px 8px;font-size:12px;font-weight:600}
 @media (max-width:600px){.rv-row>.rv-type{order:0}}
+/* 5. Approve each change separately (cards with 2+ before / after pairs) */
+.rv-pnum{display:inline-block;margin:0 8px 4px 0;padding:2px 8px;border-radius:999px;background:#1b1e23;color:#fff;font-size:12px;font-weight:700;line-height:1.4;letter-spacing:0;text-transform:none;vertical-align:middle}
+.rv-pair-wrap{display:block;margin:10px 0}
+.rv-pairbar{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.rv-pairbar button{min-height:36px;padding:6px 12px;border:1px solid #c9c4ba;border-radius:999px;background:#fff;color:#3a3f47;font:inherit;font-size:13.5px;font-weight:600;line-height:1.2;cursor:pointer;text-transform:none;letter-spacing:0}
+.rv-pairbar button:hover{background:#f7f6f3}
+.rv-pairbar button[data-k="keep"][aria-pressed="true"]{background:#166534;border-color:#166534;color:#fff}
+.rv-pairbar button[data-k="skip"][aria-pressed="true"]{background:#5d646e;border-color:#5d646e;color:#fff}
+.rv-pairbar button:focus-visible{outline:2px solid #1d4f91;outline-offset:2px}
+.rv-pair.rv-skip>:not(.rv-pairbar),.rv-pair.rv-skip .ba{opacity:.5}
+.rv-pair.rv-skip .ba.now{text-decoration:line-through;text-decoration-color:rgba(22,101,52,.45);text-decoration-thickness:1px}
+.rv-pair.rv-skip .ba.now mark.rv-d{background:transparent;box-shadow:none}
+.rv-allskip{margin:8px 0 0;font-size:14px;color:#92400e}
+.item .form button[data-d="approve"]:disabled[data-rv-off]{opacity:.45;cursor:not-allowed}
