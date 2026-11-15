@@ -99,7 +99,7 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </script>
 <h1>Developer review · SEO / AEO / GEO</h1>
 <p>Search and AI-visibility changes for Yufan to approve: titles, descriptions, schema, internal links, llms.txt, sitemap, keywords. Content changes go to the owner at <a href="/pending/">/pending</a>. Not linked from the site and not indexed. The GX10 job applies approved changes at its next run (every 8 hours).</p>
-<p class="updated">Updated 2026-11-12.</p>
+<p class="updated">Updated 2026-11-16.</p>
 
 <!-- review-ui (/pending/review-ui.js + .css, shared by /pending and /pending/yufan):
   - Language: an EN / 中文 switch shows one language. Write every explanation, note, label and question twice, each in
@@ -130,7 +130,21 @@ document.querySelector('.tab-close').addEventListener('click',function(){
 </div>
 -->
 <h2>Waiting for approval</h2>
-<p class="empty">Nothing yet.</p>
+<div class="item" data-item="[Yufan] Rent collection page schema: full business details" data-type="setting" data-page="Rent Collection" data-page-zh="收租服務" data-status="approved" data-approved="2026-11-16">
+<h3>1. [Yufan] Rent collection page schema: full business details</h3>
+<p lang="zh-Hant">來源：10 月 29 日的 AI 檢查，競爭對手研究（規則書 8a）。問題「推薦聖地牙哥做房客篩選和收租的物業經理」：4 個 AI 都沒有提到 Azure Waves（0/4）。被提到最多的公司在每個服務頁的結構化資料裡都放了完整的公司資料（名稱、電話、地址）。這一頁的 Service 只用 @id 指向首頁的公司資料，單獨讀這一頁的 AI 或搜尋引擎看不到是誰提供服務。這次把首頁已有的公司資料（名稱、別名、網址、電話、email、所在地、經紀人和 DRE 執照號碼）複製到這一頁的 JSON-LD。頁面文字不變。分支 seo/rent-collection-org-schema，下次執行時上線。</p>
+<p lang="en">Source: the Oct 29 AI check, competitor study (rule book 8a). Question "Recommend a San Diego property manager for tenant screening and rent collection.": none of the 4 AI assistants named Azure Waves (0/4). The businesses named most carry the full business details (name, phone, address) in the structured data of every service page. On this page the Service only points by @id to the business node on the home page, so an AI or search engine reading this page alone can't see who provides the service. The home page's business node (name, alternate names, URL, phone, email, locality, broker and DRE license number) is now on this page's JSON-LD too. No wording changes. Branch seo/rent-collection-org-schema, goes live next run.</p>
+<ul><li><strong lang="zh-Hant">位置：</strong><strong lang="en">Where:</strong> /rent-collection/ JSON-LD @graph<span class="ba was"><b>Before</b>BreadcrumbList, Service (provider: {"@id": "https://www.azwrealty.com/#organization"}), FAQPage</span><span class="ba now"><b>After</b>BreadcrumbList, RealEstateAgent (@id #organization: Azure Waves Realty Inc, +1-858-304-0136, San Diego CA, broker Hans Chiang, DRE 02037013), Service (provider: {"@id": "https://www.azwrealty.com/#organization"}), FAQPage</span></li></ul>
+<div class="links"><a href="/rent-collection/" target="_blank" rel="noopener">Live version</a><a href="https://github.com/youfun88/azwrealty/compare/main...seo/rent-collection-org-schema" target="_blank" rel="noopener">Diff</a></div>
+</div>
+<div class="item" data-item="[Yufan] Tenant screening page schema: full business details" data-type="setting" data-page="Tenant Screening &amp; Leasing" data-page-zh="房客篩選與租約" data-status="approved" data-approved="2026-11-16">
+<h3>2. [Yufan] Tenant screening page schema: full business details</h3>
+<p lang="zh-Hant">來源：10 月 29 日的 AI 檢查，競爭對手研究（規則書 8a）。問題「推薦聖地牙哥做房客篩選和收租的物業經理」：4 個 AI 都沒有提到 Azure Waves（0/4）。被提到最多的公司在每個服務頁的結構化資料裡都放了完整的公司資料（名稱、電話、地址）。這一頁的 Service 只用 @id 指向首頁的公司資料，單獨讀這一頁的 AI 或搜尋引擎看不到是誰提供服務。這次把首頁已有的公司資料（名稱、別名、網址、電話、email、所在地、經紀人和 DRE 執照號碼）複製到這一頁的 JSON-LD。頁面文字不變。分支 seo/tenant-screening-org-schema，下次執行時上線。</p>
+<p lang="en">Source: the Oct 29 AI check, competitor study (rule book 8a). Question "Recommend a San Diego property manager for tenant screening and rent collection.": none of the 4 AI assistants named Azure Waves (0/4). The businesses named most carry the full business details (name, phone, address) in the structured data of every service page. On this page the Service only points by @id to the business node on the home page, so an AI or search engine reading this page alone can't see who provides the service. The home page's business node (name, alternate names, URL, phone, email, locality, broker and DRE license number) is now on this page's JSON-LD too. No wording changes. Branch seo/tenant-screening-org-schema, goes live next run.</p>
+<ul><li><strong lang="zh-Hant">位置：</strong><strong lang="en">Where:</strong> /tenant-screening-and-leasing/ JSON-LD @graph<span class="ba was"><b>Before</b>BreadcrumbList, Service (provider: {"@id": "https://www.azwrealty.com/#organization"}), FAQPage</span><span class="ba now"><b>After</b>BreadcrumbList, RealEstateAgent (@id #organization: Azure Waves Realty Inc, +1-858-304-0136, San Diego CA, broker Hans Chiang, DRE 02037013), Service (provider: {"@id": "https://www.azwrealty.com/#organization"}), FAQPage</span></li></ul>
+<div class="links"><a href="/tenant-screening-and-leasing/" target="_blank" rel="noopener">Live version</a><a href="https://github.com/youfun88/azwrealty/compare/main...seo/tenant-screening-org-schema" target="_blank" rel="noopener">Diff</a></div>
+</div>
+
 </div>
 </div>
 
