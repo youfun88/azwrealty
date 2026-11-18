@@ -138,7 +138,7 @@
     });
   }
   function pickLang(){var s=null;try{s=localStorage.getItem('rv_lang');}catch(e){}
-    if(s==='en'||s==='zh')return s;return /^en/i.test(navigator.language||'')?'en':'zh';}
+    if(s==='en'||s==='zh')return s;var d=D.documentElement.getAttribute('data-rv-lang');if(d==='en'||d==='zh')return d;return /^en/i.test(navigator.language||'')?'en':'zh';}
   function setLang(l,save){
     H.classList.toggle('rv-lang-en',l==='en');H.classList.toggle('rv-lang-zh',l!=='en');
     q('.rv-lang button').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-l')===l));});
