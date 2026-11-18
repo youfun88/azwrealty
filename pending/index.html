@@ -39,8 +39,8 @@ html.rv-open .rv-gate{display:none}
 .rv-who button{border:0;background:none;color:#1d4f91;cursor:pointer;font:inherit;padding:0 0 0 8px;min-height:24px}
 </style>
 <div class="rv-gate" role="dialog" aria-labelledby="rvT">
-<h1 id="rvT">請先登入 · Sign in to review</h1>
-<p>這個頁面只開放給網站負責人和開發者，請用受邀的 Google 帳號登入。</p>
+<h1 id="rvT">Sign in to review</h1>
+<p>This page is only for the site owner and the developer. Please sign in with the Google account you were invited with.</p>
 <p>This page is for the site owner and developer. Sign in with your invited Google account.</p>
 <div id="rvBtn"></div>
 <p class="rv-err" role="alert" hidden></p>
@@ -55,7 +55,7 @@ html.rv-open .rv-gate{display:none}
   function forget(){try{localStorage.removeItem('rv_cred');}catch(e){}}
   function who(email){
     var d=document.createElement('div');d.className='rv-who';d.textContent=email;
-    var b=document.createElement('button');b.type='button';b.textContent='登出 Sign out';
+    var b=document.createElement('button');b.type='button';b.textContent='Sign out';
     b.onclick=function(){forget();if(window.google&&google.accounts)google.accounts.id.disableAutoSelect();location.reload();};
     d.appendChild(b);document.body.appendChild(d);
   }
@@ -65,9 +65,9 @@ html.rv-open .rv-gate{display:none}
       .then(function(j){
         if(j&&j.ok){var keep=j.session||cred;window.RV_CRED=keep;try{localStorage.setItem('rv_cred',keep);}catch(e){}
           document.documentElement.classList.add('rv-open');who(j.email);return;}
-        forget();if(!silent)fail('這個 Google 帳號沒有這個頁面的權限。This Google account does not have access to this page.');
+        forget();if(!silent)fail('This Google account does not have access to this page.');
       })
-      .catch(function(){if(!silent)fail('無法確認登入，請稍後再試。Could not check your sign-in. Please try again.');});
+      .catch(function(){if(!silent)fail('Could not check your sign-in. Please try again.');});
   }
   var saved=null;try{saved=localStorage.getItem('rv_cred');}catch(e){}
   var handoff=location.hash.match(/^#rv=([\w.-]+)$/);
@@ -82,8 +82,8 @@ html.rv-open .rv-gate{display:none}
 })();
 </script>
 
-<button type="button" class="tab-close" aria-label="關閉分頁 Close tab" title="關閉分頁 Close tab">&times;</button>
-<p class="tab-close-hint" role="status" hidden>請直接關閉這個分頁。You can close this tab now.</p>
+<button type="button" class="tab-close" aria-label="Close tab" title="Close tab">&times;</button>
+<p class="tab-close-hint" role="status" hidden>You can close this tab now.</p>
 <style>
 .tab-close{position:fixed;top:12px;right:12px;z-index:10;width:44px;height:44px;border-radius:50%;border:1px solid #c9c2b5;background:#fff;color:#333;font-size:26px;line-height:1;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .tab-close:hover{background:#f1ede6}.tab-close:focus-visible{outline:2px solid #1d4f91;outline-offset:2px}
