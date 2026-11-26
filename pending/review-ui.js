@@ -10,7 +10,13 @@
       Approve stays the one final button; its label shows the count when something is skipped, and it is disabled
       when every pair is skipped. On approve, "[部分同意] 同意：1, 2；不要：3" is added to the comment the page sends.
       A pair is the element marked data-pair="N" (the card template), else the .ba.was + .ba.now found in the card.
-   Sends nothing; the page's own scripts do all network requests. */
+   6. Replies survive (2026-11-26): every comment box autosaves its text to localStorage (key rv_draft:<path>:<item>:comment),
+      shows 「已自動儲存草稿」, comes back after a refresh, and is cleared only when the admin confirms the send.
+   7. Sign-in that recovers by itself: the page's own requests to admin.shiptolive.com (/api/contact, /api/review/check)
+      pass through here. On 401 (admin answers {error:'reauth'} for a missing or expired sign-in) it asks Google for
+      a new sign-in (One Tap, plus a 「重新登入後會自動送出」 button), waits for the page's gate to store the new pass
+      in window.RV_CRED, and resends the same request once, with the same text. 403 (not allowed) is left to the page.
+   Sends nothing of its own; it only resends the page's request after a new sign-in. */
 (function(){
   var D=document, H=D.documentElement;
   var HAN=/[㐀-鿿豈-﫿]/g, CJK=/[　-〿㐀-鿿豈-﫿＀-￯]/, CJKG=/[　-〿㐀-鿿豈-﫿＀-￯]/g;
@@ -375,4 +381,86 @@
       badges();place();pairs();busy=false;
     });
   }).observe(D.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-status','data-type','data-page','data-page-zh','disabled']});
+})();
+
+/* ---------- 6 + 7: drafts that survive, and a sign-in that recovers by itself ---------- */
+(function(){
+  var D=document, PREFIX='rv_draft:'+location.pathname.replace(/\/+$/,'')+':', KEEP_DAYS=30;
+  var API=/^https:\/\/admin\.shiptolive\.com\/api\/(contact|review\/check)(\?|$)/;
+  function get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function put(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}}
+  function keyFor(item){return PREFIX+item+':comment';}
+  function clearDraft(item){if(!item)return;put(keyFor(item),null);
+    D.querySelectorAll('.item').forEach(function(box){if(box.getAttribute('data-item')===item){var h=box.querySelector('.rv-saved');if(h)h.hidden=true;}});}
+
+  /* drafts: one per item's comment box; entries older than 30 days are dropped */
+  try{for(var i=localStorage.length-1;i>=0;i--){var k=localStorage.key(i);if(k&&k.indexOf('rv_draft:')===0){
+    var o=null;try{o=JSON.parse(localStorage.getItem(k));}catch(e){}
+    if(!o||!o.t||Date.now()-o.t>KEEP_DAYS*864e5)localStorage.removeItem(k);}}}catch(e){}
+  function wire(box){
+    var item=box.getAttribute('data-item'),ta=box.querySelector('.form textarea');
+    if(!item||!ta||ta._rvDraft)return;ta._rvDraft=true;
+    var hint=D.createElement('div');hint.className='rv-saved';hint.hidden=true;hint.setAttribute('aria-live','polite');
+    hint.style.cssText='margin:4px 0 0;font-size:12px;color:#6b7280';
+    hint.innerHTML='<span lang="zh-Hant">已自動儲存草稿</span> <span lang="en">Draft saved</span>';
+    ta.parentNode.insertBefore(hint,ta.nextSibling);
+    var o=null;try{o=JSON.parse(get(keyFor(item))||'null');}catch(e){}
+    if(o&&o.v&&!ta.value){ta.value=o.v;hint.hidden=false;}
+    var timer=null;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){
+      var v=ta.value;if(v.trim()){put(keyFor(item),JSON.stringify({v:v,t:Date.now()}));hint.hidden=false;}else{put(keyFor(item),null);hint.hidden=true;}
+    },300);});
+  }
+  function wireAll(){D.querySelectorAll('.item').forEach(wire);}
+  wireAll();new MutationObserver(wireAll).observe(D.body,{subtree:true,childList:true});
+
+  /* sign in again when the admin says so, then resend */
+  var real=window.fetch;if(!real)return;
+  var waiting=null;
+  function forgetPass(){try{localStorage.removeItem('rv_cred');}catch(e){}}
+  function gis(){return window.google&&google.accounts&&google.accounts.id;}
+  function reauth(stale){
+    if(waiting)return waiting;
+    forgetPass();
+    var bar=D.createElement('div');bar.className='rv-reauth';bar.setAttribute('role','alert');
+    bar.style.cssText='position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:20;max-width:calc(100% - 32px);box-sizing:border-box;background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:12px 14px;font:14px system-ui,sans-serif;color:#7c2d12;box-shadow:0 4px 16px rgba(0,0,0,.12);text-align:center';
+    bar.innerHTML='<div style="margin-bottom:8px"><span lang="zh-Hant">登入已過期。重新登入後會自動送出，文字不會遺失。</span> <span lang="en">Your sign-in expired. Sign in again and your reply is sent automatically.</span></div><div class="rv-reauth-btn" style="display:inline-block"></div>';
+    D.body.appendChild(bar);
+    var tries=0;
+    (function show(){if(!gis()){if(++tries<100)setTimeout(show,100);return;}
+      try{google.accounts.id.renderButton(bar.querySelector('.rv-reauth-btn'),{theme:'filled_blue',size:'large',text:'signin_with'});}catch(e){}
+      try{google.accounts.id.prompt();}catch(e){}})();
+    waiting=new Promise(function(resolve,reject){
+      var start=Date.now();
+      (function poll(){
+        var c=window.RV_CRED;
+        if(c&&c!==stale)return resolve(c);
+        if(Date.now()-start>15*60e3)return reject(new Error('reauth timeout'));
+        setTimeout(poll,400);
+      })();
+    });
+    waiting.then(function(){bar.remove();},function(){bar.remove();}).then(function(){waiting=null;});
+    return waiting;
+  }
+  function done(data,r){ /* a confirmed approve / changes clears that item's saved draft */
+    if(!r.ok||data.kind!=='review'||data.decision==='undo')return;
+    r.clone().json().then(function(j){if(j&&j.ok)clearDraft(data.item);},function(){});
+  }
+  window.fetch=function(input,init){
+    var url=typeof input==='string'?input:(input&&input.url)||'';
+    if(!API.test(url)||!init||typeof init.body!=='string')return real.apply(this,arguments);
+    var data;try{data=JSON.parse(init.body);}catch(e){return real.apply(this,arguments);}
+    var isCheck=/\/api\/review\/check/.test(url), sent=data.session||data.credential||'';
+    return real(input,init).then(function(r){
+      if(r.status!==401){done(data,r);return r;}
+      /* sign-in check of a stored pass: the gate shows its own sign-in; just ask Google for a new one */
+      if(isCheck){if(sent===window.RV_CRED||!window.RV_CRED){forgetPass();try{gis()&&google.accounts.id.prompt();}catch(e){}}return r;}
+      return reauth(sent).then(function(cred){
+        if('session' in data)data.session=cred;
+        data.credential=cred;
+        var again={};for(var k in init)again[k]=init[k];again.body=JSON.stringify(data);
+        return real(input,again).then(function(r2){done(data,r2);return r2;});
+      },function(){return r;});
+    });
+  };
 })();

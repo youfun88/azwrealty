@@ -186,7 +186,7 @@ Item markup (copy for each page edit; data-item must equal the board title exact
           if(j&&j.ok){st.className='status ok';st.textContent=suggest?'已收到，謝謝！8 小時內會處理，結果會寫在更新紀錄。Received, thank you. We\'ll handle it within 8 hours and note it in the change log.':'已送出，謝謝！Sent, thank you.';if(suggest){ta.value='';}}
           else throw new Error('not ok');
         })
-        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已保留。登入超過一小時請重新整理頁面再登入，或稍後再試。Could not send; your text is kept. If you signed in over an hour ago, reload and sign in again.';})
+        .catch(function(){st.className='status err';st.textContent='送出失敗，文字已自動保存。請稍後再試；如果一直失敗，請重新整理頁面。Could not send; your text is saved. Try again in a moment; if it keeps failing, reload the page.';})
         .finally(function(){btns.forEach(function(x){x.disabled=false;});});
       });
     });
